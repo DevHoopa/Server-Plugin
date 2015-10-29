@@ -32,7 +32,7 @@ public class Settings {
 	 * Erstellt eine Standard Konfiguration
 	 */
 	private void createConfig() {
-		config.set("world", Main.getInstance().getServer().getWorlds().get(0));
+		config.set("world", Main.getInstance().getServer().getWorlds().get(0).getName());
 		config.set("spawn.x", 0);
 		config.set("spawn.y", 0);
 		config.set("spawn.z", 0);
