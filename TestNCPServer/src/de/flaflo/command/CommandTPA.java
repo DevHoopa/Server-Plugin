@@ -32,7 +32,7 @@ public class CommandTPA implements CommandExecutor {
 				if (requestQueue.containsValue(p)) {
 					Player tp = UMisc.getKeyByValue(requestQueue, p);
 					
-					if (tp.isOnline() && tp != null) {
+					if (tp != null && tp.isOnline()) {
 						requestQueue.remove(p);
 						
 						tp.sendMessage("§7[§aTPA§7]§r Teleportiere zu " + p.getName() + "...");
@@ -48,13 +48,13 @@ public class CommandTPA implements CommandExecutor {
 			
 			Player to = Main.getInstance().getServer().getPlayer(args[0]);
 			
-			if (to.equals(p)) {
-				p.sendMessage("§7[§aTPA§7]§r §cDu kannst dich nicht zu dir selbst teleportieren!");
-				
-				return false;
-			}
-			
-			if (to.isOnline() && to != null) {
+			if (to != null && to.isOnline()) {
+				if (to.equals(p)) {
+					p.sendMessage("§7[§aTPA§7]§r §cDu kannst dich nicht zu dir selbst teleportieren!");
+					
+					return false;
+				}
+
 				requestQueue.put(p, to);
 				
 				p.sendMessage("§7[§aTPA§7]§r §aAnfrage gesendet.");
