@@ -64,7 +64,7 @@ public class CommandWarp implements CommandExecutor {
 			if (warpPoint != null) {
 				p.sendMessage("§7[§aWarp§7]§r Teleportiere zu " + warpName +  "...");
 
-				UPlayer.teleport(p, Main.getInstance().getSettings().getWarp(warpName), 40L);
+				UPlayer.teleport(p, Main.getInstance().getSettings().getWarp(warpName), 2L);
 				
 			} else
 				p.sendMessage("§7[§aWarp§7]§r §cDer Warp " + warpName +  " existiert nicht.");
