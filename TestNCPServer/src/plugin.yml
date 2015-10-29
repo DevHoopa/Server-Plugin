@@ -1,0 +1,31 @@
+name: Server
+main: de.flaflo.main.Main
+version: 1.1
+commands:
+   ping:
+      description: Eigenen Ping auslesen
+      command: /ping
+   fly:
+      description: Fliegen (an/aus)
+      command: /fly
+   spawn:
+      description: Zum Spawn teleportieren
+      command: /spawn
+   damage:
+      description: Schaden (an/aus)
+      command: /damage
+   heal:
+      description: Füllt alle Stats auf ihr maximum
+      command: /heal
+   apple:
+      description: Gibt dir einen/mehrere OP-Äpfel
+      command: /heal
+   warp:
+      description: Teleportiert zu einem Warp-Punkt
+      command: /warp
+   tpa:
+      description: Teleportiert zu andere Spieler
+      command: /tpa
+   c:
+      description: Virtuell einen Server Command senden
+      command: /c
