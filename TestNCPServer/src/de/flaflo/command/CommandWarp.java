@@ -69,7 +69,7 @@ public class CommandWarp implements CommandExecutor {
 			} else
 				p.sendMessage("§7[§aWarp§7]§r §cDer Warp " + warpName +  " existiert nicht.");
 		} else if (args.length == 2) {
-			if (args[0].equalsIgnoreCase("create") && p.isOp()) {
+			if (args[0].equalsIgnoreCase("create") && (p.isOp() || p.hasPermission("server.warp.create"))) {
 				String warpName = args[1].toLowerCase();
 				
 				Main.getInstance().getSettings().setWarp(p.getLocation(), warpName);

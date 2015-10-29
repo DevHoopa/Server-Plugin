@@ -25,8 +25,6 @@ public class CommandOPApple implements CommandExecutor {
 				amount = Integer.parseInt(args[0]);
 			} catch (Exception ex) {
 				p.sendMessage("§7[§aOPApple§7]§r §cDu musst eine Zahl angeben!");
-				
-				return false;
 			}
 		}
 		

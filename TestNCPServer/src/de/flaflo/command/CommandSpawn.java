@@ -27,12 +27,12 @@ public class CommandSpawn implements CommandExecutor {
 		} else if (args.length == 1) {
 			Player p = (Player) arg0;
 
-			if (args[0].equalsIgnoreCase("change") && p.isOp()) {
+			if (args[0].equalsIgnoreCase("change") && (p.isOp() || p.hasPermission("server.spawn.set"))) {
 				Main.getInstance().getSettings().setSpawn(p.getLocation());
 
 				p.sendMessage("§7[§aSpawn§7]§r Spawn gesetzt.");
 			} else
-				p.sendMessage("§7[§aSpawn§7]§r §cDu hast nicht genügend Berechtigungen.");
+				p.sendMessage("§7[§aConsole§7]§r §cDu besitzt nicht genügend Rechte!");
 		}
 
 		return false;

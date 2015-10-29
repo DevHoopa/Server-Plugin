@@ -22,12 +22,12 @@ public class CommandConsole implements CommandExecutor {
 		final Player p = (Player) arg0;
 
 		if (args.length == 0) {
-			if (!p.isOp())
+			if (!p.isOp() || !p.hasPermission("server.command.dispatch"))
 				p.sendMessage("§7[§aConsole§7]§r §cDu besitzt nicht genügend Rechte!");
 			else
 				p.sendMessage("§7[§aConsole§7]§r Benutze /c <commad>");
 		} else if (args.length > 0) {
-			if (p.isOp()) {
+			if (p.isOp() || p.hasPermission("server.command.dispatch")) {
 
 				StringBuilder cmdSb = new StringBuilder();
 
