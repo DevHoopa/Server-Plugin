@@ -1,6 +1,7 @@
 package de.flaflo.command;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,21 +20,24 @@ import de.flaflo.util.UPlayer;
  */
 public class CommandTPA implements CommandExecutor {
 
-	private static HashMap<Player, Player> requestQueue = new HashMap<Player, Player>();
+	private static HashMap<UUID, UUID> requestQueue = new HashMap<UUID, UUID>();
 	
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
 		Player p = (Player) arg0;
+		UUID pId = p.getUniqueId();
 		
 		if (args.length == 0) {
 			p.sendMessage("§7[§aTPA§7]§r Um eine Anfrage zu senden mache /tpa <name>.");
 			p.sendMessage("§7[§aTPA§7]§r Um eine Anfrage anzunehmen mache /tpa accept.");
 		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("accept")) {
-				if (requestQueue.containsValue(p)) {
-					Player tp = UMisc.getKeyByValue(requestQueue, p);
+				
+				if (requestQueue.containsValue(pId)) {
+					UUID tpId = UMisc.getKeyByValue(requestQueue, pId);
+					Player tp = Main.getInstance().getServer().getPlayer(tpId);
 					
 					if (tp != null && tp.isOnline()) {
-						requestQueue.remove(p);
+						requestQueue.remove(pId);
 						
 						tp.sendMessage("§7[§aTPA§7]§r Teleportiere zu " + p.getName() + "...");
 
@@ -47,6 +51,7 @@ public class CommandTPA implements CommandExecutor {
 			}
 			
 			Player to = Main.getInstance().getServer().getPlayer(args[0]);
+			UUID toId = Main.getInstance().getServer().getPlayer(args[0]).getUniqueId();
 			
 			if (to != null && to.isOnline()) {
 				if (to.equals(p)) {
@@ -55,7 +60,7 @@ public class CommandTPA implements CommandExecutor {
 					return false;
 				}
 
-				requestQueue.put(p, to);
+				requestQueue.put(pId, toId);
 				
 				p.sendMessage("§7[§aTPA§7]§r §aAnfrage gesendet.");
 
