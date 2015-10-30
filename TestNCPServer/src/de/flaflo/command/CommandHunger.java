@@ -25,11 +25,11 @@ public class CommandHunger implements CommandExecutor {
 			if (!hunger.contains(p.getUniqueId())) {
 				hunger.add(p.getUniqueId());
 				
-				p.sendMessage("§7[§aSchaden§7]§r Du erlaubst Hunger nicht mehr.");
+				p.sendMessage("§7[§aHunger§7]§r Du erlaubst Hunger nicht mehr.");
 			} else {
 				hunger.remove(p.getUniqueId());
 				
-				p.sendMessage("§7[§aSchaden§7]§r Du erlaubst nun Hunger.");
+				p.sendMessage("§7[§aHunger§7]§r Du erlaubst nun Hunger.");
 			}
 		}
 		
