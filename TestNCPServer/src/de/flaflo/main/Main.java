@@ -1,6 +1,7 @@
 package de.flaflo.main;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -16,7 +17,6 @@ import de.flaflo.command.CommandTPA;
 import de.flaflo.command.CommandWarp;
 import de.flaflo.listener.MainListener;
 import de.flaflo.settings.Settings;
-import net.minecraft.server.v1_8_R2.EntityItem;
 
 /**
  * Hauptklasse für das Serverplugin
@@ -51,16 +51,16 @@ public class Main extends JavaPlugin {
 
 			@Override
 			public void run() {
-				Main.this.getServer().broadcastMessage("§7[§aClarLag§7]§r §e60§r Sekunden bevor alle Items auf dem Boden entfernt werden.");
+				Main.this.getServer().broadcastMessage("§7[§aClearLag§7]§r §e60§r Sekunden bevor alle Items auf dem Boden entfernt werden.");
 				
 				new BukkitRunnable() {
 
 					@Override
 					public void run() {
-						Main.this.getServer().broadcastMessage("§7[§aClarLag§7]§r Entferne alle Items auf dem Boden...");
+						Main.this.getServer().broadcastMessage("§7[§aClearLag§7]§r Entferne alle Items auf dem Boden...");
 						
 						for (Entity e : Main.this.getServer().getWorlds().get(0).getEntities()) {
-							if (e instanceof EntityItem)
+							if (e instanceof Item)
 								e.remove();
 						}
 					}
