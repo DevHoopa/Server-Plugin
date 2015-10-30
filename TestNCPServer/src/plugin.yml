@@ -1,6 +1,6 @@
 name: Server
 main: de.flaflo.main.Main
-version: 1.1
+version: 1.2
 commands:
    ping:
       description: Eigenen Ping auslesen
@@ -29,3 +29,6 @@ commands:
    c:
       description: Virtuell einen Server Command senden
       command: /c
+   hunger:
+      description: Hunger (an/aus)
+      command: /hunger

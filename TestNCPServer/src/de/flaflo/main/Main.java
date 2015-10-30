@@ -6,6 +6,7 @@ import de.flaflo.command.CommandConsole;
 import de.flaflo.command.CommandDamage;
 import de.flaflo.command.CommandFly;
 import de.flaflo.command.CommandHeal;
+import de.flaflo.command.CommandHunger;
 import de.flaflo.command.CommandOPApple;
 import de.flaflo.command.CommandPing;
 import de.flaflo.command.CommandSpawn;
@@ -57,6 +58,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("warp").setExecutor(new CommandWarp());
 		this.getCommand("tpa").setExecutor(new CommandTPA());
 		this.getCommand("c").setExecutor(new CommandConsole());
+		this.getCommand("hunger").setExecutor(new CommandHunger());
 	}
 	
 	/**

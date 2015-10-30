@@ -10,18 +10,29 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import de.flaflo.command.CommandDamage;
+import de.flaflo.command.CommandHunger;
 import de.flaflo.util.UPlayer;
 
 /**
  * Hauptklasse für alle Listener
  * 
  * @author Flaflo
- *
  */
 public class MainListener implements Listener {
+
+	@EventHandler
+	private void onFoodLevelChanged(FoodLevelChangeEvent e) {
+		if (e.getEntity() instanceof Player) {
+			Player p = (Player) e.getEntity();
+
+			if (CommandHunger.hunger.contains(p.getUniqueId()))
+				e.setCancelled(true);
+		}
+	}
 
 	@EventHandler
 	private void onCreatureSpawn(CreatureSpawnEvent e) {
