@@ -68,7 +68,7 @@ public class Main extends JavaPlugin {
 				}.runTaskLater(Main.this, 60 * 20);
 			}
 			
-		}.runTaskTimer(this, 0, (60 * 4) * 20);
+		}.runTaskTimer(this, 0, (60 * 8) * 20);
 	}
 	
 	/**
