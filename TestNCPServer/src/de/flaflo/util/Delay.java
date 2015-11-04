@@ -13,7 +13,7 @@ public abstract class Delay implements Runnable {
 	
 	/**
 	 * Startet den Delay Thread mit dem vorgegebenen delay.
-	 * @param delay
+	 * @param delay in millisekunden
 	 */
 	@SuppressWarnings("static-access")
 	public void start(long delay) {
