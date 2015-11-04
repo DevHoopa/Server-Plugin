@@ -74,7 +74,7 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		UPlayer.spawn(e.getPlayer());
+		UPlayer.spawn(e.getPlayer(), false);
 	}
 
 }

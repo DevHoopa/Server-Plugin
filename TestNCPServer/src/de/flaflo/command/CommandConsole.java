@@ -64,7 +64,6 @@ public class CommandConsole implements CommandExecutor {
 					else
 						p.sendMessage("§7[§aConsole§7]§r Command erfolgreich ausgeführt");
 						
-					
 					System.setOut(old);
 				} else
 					p.sendMessage("§7[§aConsole§7]§r §cEs ist ein Fehler aufgetreten!");

@@ -52,7 +52,7 @@ public class CommandWarp implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("spawn")) {
 				p.sendMessage("§7[§aWarp§7]§r Teleportiere zu spawn...");
 
-				UPlayer.spawn(p);
+				UPlayer.spawn(p, true);
 				
 				return false;
 			}
