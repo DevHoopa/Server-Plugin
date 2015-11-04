@@ -20,7 +20,6 @@ public class UPlayer {
 	 * @param delay
 	 */
 	public static void teleport(Player p, Location loc, long delay) {
-
 		new Delay() {
 
 			@Override
