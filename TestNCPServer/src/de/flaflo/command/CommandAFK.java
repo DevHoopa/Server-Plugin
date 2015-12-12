@@ -31,11 +31,17 @@ public class CommandAFK implements CommandExecutor {
 			lastChecked = new HashMap<UUID, Location>();
 			checkThread = new Thread(this);
 		}
+		
+		/**
+		 * Started den task
+		 */
+		public void start() {
+			this.isRunning = true;
+			checkThread.start();
+		}
 
 		@Override
 		public void run() {
-			this.isRunning = true;
-			
 			while (this.isRunning) {
 				try {
 					Thread.sleep(300000L);
