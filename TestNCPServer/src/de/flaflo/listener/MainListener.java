@@ -12,7 +12,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
+import de.flaflo.command.CommandAFK;
 import de.flaflo.command.CommandDamage;
 import de.flaflo.command.CommandHunger;
 import de.flaflo.util.UPlayer;
@@ -25,50 +27,49 @@ import de.flaflo.util.UPlayer;
 public class MainListener implements Listener {
 
 	@EventHandler
+	private void onPlayerMove(PlayerMoveEvent e) {
+		Player p = e.getPlayer();
+		
+		if (CommandAFK.getAfkPlayers().contains(p.getUniqueId()))
+			CommandAFK.unsetAFK(p);
+	}
+	
+	@EventHandler
 	private void onFoodLevelChanged(FoodLevelChangeEvent e) {
-		if (e.getEntity() instanceof Player) {
-			Player p = (Player) e.getEntity();
-
-			if (CommandHunger.hunger.contains(p.getUniqueId()))
+		if (e.getEntity() instanceof Player)
+			if (CommandHunger.getPlayersBlockedHunger().contains(e.getEntity().getUniqueId()))
 				e.setCancelled(true);
-		}
 	}
 
 	@EventHandler
 	private void onCreatureSpawn(CreatureSpawnEvent e) {
-		if (e.getSpawnReason() == SpawnReason.EGG || e.getSpawnReason() == SpawnReason.CUSTOM)
-			e.setCancelled(false);
-		else
+		if (!e.getSpawnReason().equals(SpawnReason.EGG) && !e.getSpawnReason().equals(SpawnReason.CUSTOM) && !e.getSpawnReason().equals(SpawnReason.SPAWNER))
 			e.setCancelled(true);
 	}
 
 	@EventHandler
 	private void onDamage(EntityDamageEvent e) {
-		if (e.getEntity() instanceof Player) {
-			Player p = (Player) e.getEntity();
-
-			if (!CommandDamage.damage.contains(p.getUniqueId()))
+		if (e.getEntity() instanceof Player)
+			if (!CommandDamage.getDamageablePlayers().contains(e.getEntity().getUniqueId()))
 				e.setCancelled(true);
-		}
 	}
 
 	@EventHandler
 	private void onDamageByEntity(EntityDamageByEntityEvent e) {
-		if (e.getEntity() instanceof Player) {
-			if (!CommandDamage.damage.contains(e.getEntity().getUniqueId()) || !CommandDamage.damage.contains(e.getDamager().getUniqueId()))
+		if (e.getEntity() instanceof Player)
+			if (!CommandDamage.getDamageablePlayers().contains(e.getEntity().getUniqueId()) || !CommandDamage.getDamageablePlayers().contains(e.getDamager().getUniqueId()))
 				e.setCancelled(true);
-		}
 	}
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
-		if (e.getPlayer().getGameMode() != GameMode.CREATIVE)
+		if (!e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
 			e.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
-		if (e.getPlayer().getGameMode() != GameMode.CREATIVE)
+		if (!e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
 			e.setCancelled(true);
 	}
 

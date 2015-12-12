@@ -39,11 +39,7 @@ public class Settings {
 		config.set("spawn.yaw", 0);
 		config.set("spawn.pitch", 0);
 		
-		try {
-			config.save(cfgFile);
-		} catch (IOException e) {
-			Main.getInstance().getLogger().log(Level.WARNING, "Fehler beim speichern der Einstellung");
-		}
+		this.save();
 	}
 	
 	/**
@@ -58,11 +54,7 @@ public class Settings {
 		config.set("spawn.yaw", spawn.getYaw());
 		config.set("spawn.pitch", spawn.getPitch());
 		
-		try {
-			config.save(cfgFile);
-		} catch (IOException e) {
-			Main.getInstance().getLogger().log(Level.WARNING, "Fehler beim speichern des Spawns");
-		}
+		this.save();
 	}
 	
 	/**
@@ -102,11 +94,13 @@ public class Settings {
 		config.set("warps." + name + ".yaw", warp.getYaw());
 		config.set("warps." + name + ".pitch", warp.getPitch());
 		
-		try {
-			config.save(cfgFile);
-		} catch (IOException e) {
-			Main.getInstance().getLogger().log(Level.WARNING, "Fehler beim speichern des Warps " + name);
-		}
+		this.save();
+	}
+	
+	public void removeWarp(String name) {
+		config.set("warps." + name, null);
+		
+		this.save();
 	}
 	
 	/**
@@ -121,6 +115,18 @@ public class Settings {
 		l.setPitch((float) config.getDouble("spawn.pitch"));
 		
 		return l;
+	}
+	
+	/**
+	 * Speichert die Einstellungen
+	 */
+	public void save() {
+		try {
+			config.save(cfgFile);
+		} catch (IOException e) {
+			Main.getInstance().getLogger().log(Level.WARNING, "Fehler beim speichern der Einstellungen: ");
+			e.printStackTrace();
+		}
 	}
 	
 	/**

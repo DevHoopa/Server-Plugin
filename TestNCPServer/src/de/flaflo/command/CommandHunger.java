@@ -16,18 +16,18 @@ import org.bukkit.entity.Player;
  */
 public class CommandHunger implements CommandExecutor {
 
-	public static ArrayList<UUID> hunger = new ArrayList<UUID>();
+	private static ArrayList<UUID> playersBlockedHunger = new ArrayList<UUID>();
 	
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
 		if (args.length == 0) {
 			Player p = (Player) arg0;
 
-			if (!hunger.contains(p.getUniqueId())) {
-				hunger.add(p.getUniqueId());
+			if (!playersBlockedHunger.contains(p.getUniqueId())) {
+				playersBlockedHunger.add(p.getUniqueId());
 				
 				p.sendMessage("§7[§aHunger§7]§r Du erlaubst Hunger nicht mehr.");
 			} else {
-				hunger.remove(p.getUniqueId());
+				playersBlockedHunger.remove(p.getUniqueId());
 				
 				p.sendMessage("§7[§aHunger§7]§r Du erlaubst nun Hunger.");
 			}
@@ -36,4 +36,11 @@ public class CommandHunger implements CommandExecutor {
 		return false;
 	}
 
+	/**
+	 * Gibt Spieler zurück, die Hunger blockieren
+	 * @return ArrayList<UUID>
+	 */
+	public static ArrayList<UUID> getPlayersBlockedHunger() {
+		return playersBlockedHunger;
+	}
 }

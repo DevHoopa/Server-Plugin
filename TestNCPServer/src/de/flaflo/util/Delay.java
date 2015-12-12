@@ -15,13 +15,12 @@ public abstract class Delay implements Runnable {
 	 * Startet den Delay Thread mit dem vorgegebenen delay.
 	 * @param delay in millisekunden
 	 */
-	@SuppressWarnings("static-access")
 	public void start(long delay) {
 		if (this.runningThread == null)
 			this.runningThread = new Thread(this);
 		
 		try {
-			this.runningThread.sleep(delay);
+			Thread.sleep(delay);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
