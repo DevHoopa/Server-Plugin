@@ -8,6 +8,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -54,6 +55,9 @@ public class MainListener implements Listener {
 		if (e.getEntity() instanceof Player)
 			if (!CommandDamage.getDamageablePlayers().contains(e.getEntity().getUniqueId()))
 				e.setCancelled(true);
+		
+		if (e.getCause().equals(DamageCause.POISON) || e.getCause().equals(DamageCause.MAGIC))
+			e.setCancelled(false);
 	}
 
 	@EventHandler
