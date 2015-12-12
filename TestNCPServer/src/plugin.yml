@@ -33,5 +33,5 @@ commands:
       description: Hunger (an/aus)
       command: /hunger
    afk:
-      description: AFK-Modus wechselt
+      description: AFK-Modus wechseln
       command: /afk
