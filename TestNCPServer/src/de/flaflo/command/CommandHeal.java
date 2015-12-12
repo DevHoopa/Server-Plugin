@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  * Zuständig für den Heal Befehl
@@ -20,6 +21,9 @@ public class CommandHeal implements CommandExecutor {
 			p.setHealth(p.getMaxHealth());
 			p.setFoodLevel(20);
 			p.setSaturation(20);
+			
+			for (PotionEffectType e : PotionEffectType.values())
+				p.removePotionEffect(e);
 
 			p.sendMessage("§7[§aHeal§7]§r Du wurdest geheilt.");
 		}

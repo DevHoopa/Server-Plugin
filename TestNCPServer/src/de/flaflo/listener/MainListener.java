@@ -14,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.flaflo.command.CommandAFK;
 import de.flaflo.command.CommandDamage;
@@ -68,20 +69,25 @@ public class MainListener implements Listener {
 	}
 
 	@EventHandler
-	public void onBlockBreak(BlockBreakEvent e) {
+	private void onBlockBreak(BlockBreakEvent e) {
 		if (!e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
 			e.setCancelled(true);
 	}
 
 	@EventHandler
-	public void onBlockPlace(BlockPlaceEvent e) {
+	private void onBlockPlace(BlockPlaceEvent e) {
 		if (!e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
 			e.setCancelled(true);
 	}
 
 	@EventHandler
-	public void onJoin(PlayerJoinEvent e) {
+	private void onJoin(PlayerJoinEvent e) {
 		UPlayer.spawn(e.getPlayer(), false);
+	}
+	
+	@EventHandler
+	private void onLeave(PlayerQuitEvent e) {
+		
 	}
 
 }
