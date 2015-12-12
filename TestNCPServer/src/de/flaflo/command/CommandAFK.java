@@ -51,11 +51,11 @@ public class CommandAFK implements CommandExecutor {
 	
 				for (Player p : Main.getInstance().getServer().getOnlinePlayers()) {
 					if (lastChecked.containsKey(p.getUniqueId())) {
-						lastChecked.replace(p.getUniqueId(), p.getLocation());
-						
 						if (lastChecked.get(p.getUniqueId()).equals(p.getLocation()))
 							if (!CommandAFK.getAfkPlayers().contains(p.getUniqueId()))
 								CommandAFK.setAFK(p);
+
+						lastChecked.replace(p.getUniqueId(), p.getLocation());
 					} else
 						lastChecked.put(p.getUniqueId(), p.getLocation());
 				}
