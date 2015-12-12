@@ -87,7 +87,8 @@ public class MainListener implements Listener {
 	
 	@EventHandler
 	private void onLeave(PlayerQuitEvent e) {
-		
+		if (CommandAFK.getAfkPlayers().contains(e.getPlayer().getUniqueId()))
+			CommandAFK.getAfkPlayers().remove(e.getPlayer().getUniqueId());
 	}
 
 }
