@@ -16,22 +16,21 @@ import de.flaflo.main.Main;
  * Zuständig für den Damage Befehl
  * 
  * @author Flaflo
- *
  */
 public class CommandAFK implements CommandExecutor {
 
-	public static class AFKTask implements Runnable {
+	public class AFKTask implements Runnable {
 
 		private HashMap<UUID, Location> lastChecked;
 		private Thread checkThread;
-		
+
 		private boolean isRunning;
-		
+
 		public AFKTask() {
 			lastChecked = new HashMap<UUID, Location>();
 			checkThread = new Thread(this);
 		}
-		
+
 		/**
 		 * Started den task
 		 */
@@ -44,31 +43,34 @@ public class CommandAFK implements CommandExecutor {
 		public void run() {
 			while (this.isRunning) {
 				try {
-					Thread.sleep(30000L);
+					Thread.sleep(200000L);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-	
+
 				for (Player p : Main.getInstance().getServer().getOnlinePlayers()) {
 					if (lastChecked.containsKey(p.getUniqueId())) {
 						if (lastChecked.get(p.getUniqueId()).equals(p.getLocation()))
-							if (!CommandAFK.getAfkPlayers().contains(p.getUniqueId()))
-								CommandAFK.setAFK(p);
+							CommandAFK.setAFK(p);
 
-						lastChecked.replace(p.getUniqueId(), p.getLocation());
-					} else
+						lastChecked.remove(p.getUniqueId());
+					} else {
 						lastChecked.put(p.getUniqueId(), p.getLocation());
+
+						if (!CommandAFK.getAfkPlayers().contains(p.getUniqueId()))
+							CommandAFK.setAFK(p);
+					}
 				}
 			}
 		}
-		
+
 		/**
 		 * Stopt den Task
 		 */
 		public void stop() {
 			this.isRunning = false;
 			lastChecked.clear();
-			
+
 			try {
 				checkThread.join();
 			} catch (InterruptedException e) {
@@ -77,7 +79,9 @@ public class CommandAFK implements CommandExecutor {
 		}
 
 		/**
-		 * Gibt eine Map mit den letzten gecheckten Spielerids mit ihrer Position
+		 * Gibt eine Map mit den letzten gecheckten Spielerids mit ihrer
+		 * Position
+		 * 
 		 * @return HashMap<UUID, Location>
 		 */
 		public HashMap<UUID, Location> getLastChecked() {
@@ -86,24 +90,25 @@ public class CommandAFK implements CommandExecutor {
 
 		/**
 		 * Gibt den Checkthread zurück
+		 * 
 		 * @return Thread
 		 */
 		public Thread getCheckThread() {
 			return checkThread;
 		}
-		
+
 		public boolean isRunning() {
 			return isRunning;
 		}
 	}
 
 	private static ArrayList<UUID> afkPlayers = new ArrayList<UUID>();
-	private static AFKTask afkTask = new AFKTask();
-	
+	private AFKTask afkTask = new AFKTask();
+
 	public CommandAFK() {
 		afkTask.start();
 	}
-	
+
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
 		if (args.length == 0) {
 			Player p = (Player) arg0;
@@ -113,34 +118,36 @@ public class CommandAFK implements CommandExecutor {
 			else
 				unsetAFK(p);
 		}
-		
+
 		return false;
 	}
 
 	/**
 	 * Setzt einen Spieler AFK
+	 * 
 	 * @param p
 	 */
 	public static void setAFK(Player p) {
 		if (!afkPlayers.contains(p.getUniqueId())) {
 			afkPlayers.add(p.getUniqueId());
-			
+
 			Main.getInstance().getServer().broadcastMessage("§7[§aAFK§7]§r §e" + p.getName() + "§r ist jetzt AFK.");
 		}
 	}
-	
+
 	/**
 	 * Lässt den Spieler vom AFK zurückkehren
+	 * 
 	 * @param p
 	 */
 	public static void unsetAFK(Player p) {
 		if (afkPlayers.contains(p.getUniqueId())) {
 			afkPlayers.remove(p.getUniqueId());
-			
+
 			Main.getInstance().getServer().broadcastMessage("§7[§aAFK§7]§r §e" + p.getName() + "§r ist wieder zurück.");
 		}
 	}
-	
+
 	public static ArrayList<UUID> getAfkPlayers() {
 		return afkPlayers;
 	}
@@ -148,8 +155,8 @@ public class CommandAFK implements CommandExecutor {
 	/**
 	 * @return the afkTask
 	 */
-	public static AFKTask getAfkTask() {
+	public AFKTask getAfkTask() {
 		return afkTask;
 	}
-	
+
 }
