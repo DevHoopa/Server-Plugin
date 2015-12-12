@@ -5,6 +5,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.flaflo.command.CommandAFK;
 import de.flaflo.command.CommandConsole;
 import de.flaflo.command.CommandDamage;
 import de.flaflo.command.CommandFly;
@@ -92,6 +93,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("tpa").setExecutor(new CommandTPA());
 		this.getCommand("c").setExecutor(new CommandConsole());
 		this.getCommand("hunger").setExecutor(new CommandHunger());
+		this.getCommand("afk").setExecutor(new CommandAFK());
 	}
 	
 	/**
