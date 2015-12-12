@@ -83,6 +83,7 @@ public class MainListener implements Listener {
 	@EventHandler
 	private void onJoin(PlayerJoinEvent e) {
 		UPlayer.spawn(e.getPlayer(), false);
+		e.getPlayer().chat("/testncp input " + e.getPlayer().getName());
 	}
 	
 	@EventHandler

@@ -106,7 +106,7 @@ public class CommandAFK implements CommandExecutor {
 	private AFKTask afkTask = new AFKTask();
 
 	public CommandAFK() {
-		afkTask.start();
+//		afkTask.start();
 	}
 
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
