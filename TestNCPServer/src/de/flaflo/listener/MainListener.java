@@ -28,10 +28,12 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onPlayerMove(PlayerMoveEvent e) {
-		Player p = e.getPlayer();
-		
-		if (CommandAFK.getAfkPlayers().contains(p.getUniqueId()))
-			CommandAFK.unsetAFK(p);
+		if (e.getFrom().distance(e.getTo()) > 2) {
+			Player p = e.getPlayer();
+			
+			if (CommandAFK.getAfkPlayers().contains(p.getUniqueId()))
+				CommandAFK.unsetAFK(p);
+		}
 	}
 	
 	@EventHandler
