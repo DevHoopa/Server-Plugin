@@ -122,9 +122,11 @@ public class CommandAFK implements CommandExecutor {
 	 * @param p
 	 */
 	public static void setAFK(Player p) {
-		afkPlayers.add(p.getUniqueId());
-		
-		Main.getInstance().getServer().broadcastMessage("§7[§aAFK§7]§r §e" + p.getName() + "§r ist jetzt AFK.");
+		if (!afkPlayers.contains(p.getUniqueId())) {
+			afkPlayers.add(p.getUniqueId());
+			
+			Main.getInstance().getServer().broadcastMessage("§7[§aAFK§7]§r §e" + p.getName() + "§r ist jetzt AFK.");
+		}
 	}
 	
 	/**
@@ -132,9 +134,11 @@ public class CommandAFK implements CommandExecutor {
 	 * @param p
 	 */
 	public static void unsetAFK(Player p) {
-		afkPlayers.remove(p.getUniqueId());
-		
-		Main.getInstance().getServer().broadcastMessage("§7[§aAFK§7]§r §e" + p.getName() + "§r ist wieder zurück.");
+		if (afkPlayers.contains(p.getUniqueId())) {
+			afkPlayers.remove(p.getUniqueId());
+			
+			Main.getInstance().getServer().broadcastMessage("§7[§aAFK§7]§r §e" + p.getName() + "§r ist wieder zurück.");
+		}
 	}
 	
 	public static ArrayList<UUID> getAfkPlayers() {
