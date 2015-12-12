@@ -28,7 +28,7 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onPlayerMove(PlayerMoveEvent e) {
-		if (e.getFrom().distance(e.getTo()) > 1) {
+		if (e.getFrom().distance(e.getTo()) > 0.25) {
 			Player p = e.getPlayer();
 			
 			if (CommandAFK.getAfkPlayers().contains(p.getUniqueId()))
