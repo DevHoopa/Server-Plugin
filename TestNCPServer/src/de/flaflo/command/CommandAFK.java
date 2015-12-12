@@ -43,7 +43,7 @@ public class CommandAFK implements CommandExecutor {
 		public void run() {
 			while (this.isRunning) {
 				try {
-					Thread.sleep(200000L);
+					Thread.sleep(300000L);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
