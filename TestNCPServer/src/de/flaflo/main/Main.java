@@ -10,6 +10,7 @@ import de.flaflo.command.CommandAFK;
 import de.flaflo.command.CommandConsole;
 import de.flaflo.command.CommandDamage;
 import de.flaflo.command.CommandFly;
+import de.flaflo.command.CommandFreeze;
 import de.flaflo.command.CommandHeal;
 import de.flaflo.command.CommandHunger;
 import de.flaflo.command.CommandOPApple;
@@ -111,6 +112,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("c").setExecutor(new CommandConsole());
 		this.getCommand("hunger").setExecutor(new CommandHunger());
 		this.getCommand("afk").setExecutor(new CommandAFK());
+		this.getCommand("freeze").setExecutor(new CommandFreeze());
 	}
 	
 	/**

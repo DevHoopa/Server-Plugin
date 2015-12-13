@@ -47,7 +47,7 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onCreatureSpawn(CreatureSpawnEvent e) {
-		if (!e.getSpawnReason().equals(SpawnReason.EGG) && !e.getSpawnReason().equals(SpawnReason.CUSTOM) && !e.getSpawnReason().equals(SpawnReason.SPAWNER))
+		if (e.getSpawnReason().equals(SpawnReason.NATURAL))
 			e.setCancelled(true);
 	}
 
