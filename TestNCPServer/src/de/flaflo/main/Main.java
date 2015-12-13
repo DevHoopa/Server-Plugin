@@ -2,6 +2,7 @@ package de.flaflo.main;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -40,8 +41,24 @@ public class Main extends JavaPlugin {
 		
 		registerCommands();
 		registerEvents();
-		
+
+		addAllInputs();
 		startClearLag();
+	}
+	
+	/**
+	 * Fügt alle zu ihren inputs hinzu
+	 */
+	private void addAllInputs() {
+		new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				for (Player p : Main.this.getServer().getOnlinePlayers())
+					p.chat("/testncp input " + p.getName());				
+			}
+			
+		}.runTaskLater(this, 20L);
 	}
 	
 	/**
