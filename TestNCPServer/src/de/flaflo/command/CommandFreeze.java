@@ -173,6 +173,12 @@ public class CommandFreeze implements CommandExecutor {
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
 		Player p = (Player) arg0;
 		
+		if (!p.isOp() || !p.hasPermission("server.command.dispatch")) {
+			p.sendMessage("§7[§aFreeze§7]§r §cDu besitzt nicht genügend Rechte!");
+		
+			return false;
+		}
+		
 		if (args.length == 0)
 			p.sendMessage("§7[§aFreeze§7]§r Benutze §a/freeze <Spieler>§r oder §a/freeze <Spieler> <freezed>§r!");
 		else if (args.length == 1) {
