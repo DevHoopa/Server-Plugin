@@ -120,6 +120,7 @@ public class Main extends JavaPlugin {
 						CuboidSelection sel = new CuboidSelection(Main.this.getServer().getWorlds().get(0), new Location(Main.this.getServer().getWorlds().get(0), 780, 0, 150), new Location(Main.this.getServer().getWorlds().get(0), 761, 255, 131));
 						try {
 							Region region = sel.getRegionSelector().getRegion();
+							
 							region.getWorld().regenerate(region, WorldEdit.getInstance().getEditSessionFactory().getEditSession(region.getWorld(), -1));							
 						} catch (IncompleteRegionException e) {
 							e.printStackTrace();

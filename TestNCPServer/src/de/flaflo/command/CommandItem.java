@@ -77,8 +77,7 @@ public class CommandItem implements CommandExecutor {
 				
 				p.getInventory().addItem(superAxe);
 				p.sendMessage("§7[§aItem§7]§r §aDiese Spitzhacke bewirkt Wunder!");
-			}
-			if (args[0].equalsIgnoreCase("supershovel")) {
+			} else if (args[0].equalsIgnoreCase("supershovel")) {
 				ItemStack superShovel = new ItemStack(Material.DIAMOND_SPADE);
 				
 				ItemMeta shovelMeta = superShovel.getItemMeta();
