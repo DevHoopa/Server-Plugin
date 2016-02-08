@@ -94,7 +94,7 @@ public class Main extends JavaPlugin {
 						}
 					}
 					
-				}.runTaskLater(Main.this, 10 * 20);
+				}.runTaskLater(Main.this, 5 * 20);
 			}
 			
 		}.runTaskTimer(this, 0, (60 * 10) * 20);
@@ -155,6 +155,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("afk").setExecutor(new CommandAFK());
 		this.getCommand("freeze").setExecutor(new CommandFreeze());
 		this.getCommand("item").setExecutor(new CommandItem());
+		this.getCommand("clear").setExecutor(new CommandItem());
 	}
 	
 	/**
