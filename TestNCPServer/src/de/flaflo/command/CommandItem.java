@@ -38,7 +38,7 @@ public class CommandItem implements CommandExecutor {
 
 					p.getInventory().addItem(new ItemStack(material, amount));
 
-					p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name()) + "§r erhalten.");
+					p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name().replace("_", " ")) + "§r erhalten.");
 				}
 			} catch (NumberFormatException ex) {
 				p.sendMessage("§7[§aItem§7]§r §cDu musst eine Zahl angeben!");
@@ -57,7 +57,7 @@ public class CommandItem implements CommandExecutor {
 			else {
 				p.getInventory().addItem(new ItemStack(material, amount));
 
-				p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name()) + "§r erhalten.");
+				p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name().replace("_", " ")) + "§r erhalten.");
 			}
 		} else {
 			p.sendMessage("§7[§aItem§7]§r §c/item <id/name>");
