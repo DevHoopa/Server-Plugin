@@ -19,13 +19,16 @@ import org.bukkit.inventory.ItemStack;
  */
 public class CommandItem implements CommandExecutor {
 
-	public static final Map<Enchantment, Integer> ALL_ENCHANTMENTS;
+	public static final Map<Enchantment, Integer> SUPER_AXE_ECHANTMENTS;
 	
 	static {
-		ALL_ENCHANTMENTS = new HashMap<Enchantment, Integer>();
+		SUPER_AXE_ECHANTMENTS = new HashMap<Enchantment, Integer>();
+		
+		final ItemStack dummyStack = new ItemStack(Material.DIAMOND_PICKAXE, 1);
 		
 		for (Enchantment ench : Enchantment.values())
-			ALL_ENCHANTMENTS.put(ench, ench.getMaxLevel());
+			if (ench.canEnchantItem(dummyStack))
+				SUPER_AXE_ECHANTMENTS.put(ench, ench.getMaxLevel());
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -59,7 +62,13 @@ public class CommandItem implements CommandExecutor {
 		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("superaxe")) {
 				ItemStack superAxe = new ItemStack(Material.DIAMOND_PICKAXE, amount);
-				superAxe.addEnchantments(ALL_ENCHANTMENTS);
+				try {
+					superAxe.addEnchantments(SUPER_AXE_ECHANTMENTS);
+					p.getInventory().addItem(superAxe);
+					p.sendMessage("§7[§aItem§7]§r §aDiese Spitzhacke bewirkt wunder!");
+				} catch (Exception ex) {
+					p.sendMessage(ex.getMessage());
+				}
 			} else {
 				Material material = null;
 
