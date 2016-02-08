@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Zuständig für den Blocks Befehl
@@ -68,7 +69,11 @@ public class CommandItem implements CommandExecutor {
 		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("superaxe")) {
 				ItemStack superAxe = new ItemStack(Material.DIAMOND_PICKAXE);
-				superAxe.getItemMeta().setDisplayName("§b§lSuper Spitzhacke");
+				
+				ItemMeta axeMeta = superAxe.getItemMeta();
+				axeMeta.setDisplayName("§b§lSuper Spitzhacke");
+				superAxe.setItemMeta(axeMeta);
+				
 				superAxe.addEnchantments(SUPER_AXE_ECHANTMENTS);
 				
 				p.getInventory().addItem(superAxe);
@@ -76,7 +81,11 @@ public class CommandItem implements CommandExecutor {
 			}
 			if (args[0].equalsIgnoreCase("supershovel")) {
 				ItemStack superShovel = new ItemStack(Material.DIAMOND_SPADE);
-				superShovel.getItemMeta().setDisplayName("§b§lSuper Schaufel");
+				
+				ItemMeta shovelMeta = superShovel.getItemMeta();
+				shovelMeta.setDisplayName("§b§lSuper Schaufel");
+				superShovel.setItemMeta(shovelMeta);
+				
 				superShovel.addEnchantments(SUPER_SHOVEL_ECHANTMENTS);
 				
 				p.getInventory().addItem(superShovel);
