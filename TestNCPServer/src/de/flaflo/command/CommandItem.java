@@ -60,8 +60,8 @@ public class CommandItem implements CommandExecutor {
 				p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name()) + "§r erhalten.");
 			}
 		} else {
-			p.sendMessage("§7[§aBlock§7]§r §c/item <id/name>");
-			p.sendMessage("§7[§aBlocks§7]§r §c/item <id/name> <anzahl>");
+			p.sendMessage("§7[§aItem§7]§r §c/item <id/name>");
+			p.sendMessage("§7[§aItem§7]§r §c/item <id/name> <anzahl>");
 		}
 
 		return false;
