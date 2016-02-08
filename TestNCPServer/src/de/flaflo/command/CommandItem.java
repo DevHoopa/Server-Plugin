@@ -29,11 +29,12 @@ public class CommandItem implements CommandExecutor {
 		final ItemStack axeDummy = new ItemStack(Material.DIAMOND_PICKAXE);
 		final ItemStack shovelDummy = new ItemStack(Material.DIAMOND_SPADE);
 
-		for (Enchantment ench : Enchantment.values())
+		for (Enchantment ench : Enchantment.values()) {
 			if (ench.canEnchantItem(axeDummy))
 				SUPER_AXE_ECHANTMENTS.put(ench, ench.getMaxLevel());
-			else if (ench.canEnchantItem(shovelDummy))
+			if (ench.canEnchantItem(shovelDummy))
 				SUPER_SHOVEL_ECHANTMENTS.put(ench, ench.getMaxLevel());
+		}
 	}
 
 	@SuppressWarnings("deprecation")
