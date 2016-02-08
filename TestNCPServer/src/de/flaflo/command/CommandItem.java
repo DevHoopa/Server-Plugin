@@ -77,7 +77,7 @@ public class CommandItem implements CommandExecutor {
 				superAxe.addEnchantments(SUPER_AXE_ECHANTMENTS);
 				
 				p.getInventory().addItem(superAxe);
-				p.sendMessage("§7[§aItem§7]§r §aDiese Spitzhacke bewirkt wunder!");
+				p.sendMessage("§7[§aItem§7]§r §aDiese Spitzhacke bewirkt Wunder!");
 			}
 			if (args[0].equalsIgnoreCase("supershovel")) {
 				ItemStack superShovel = new ItemStack(Material.DIAMOND_SPADE);
@@ -89,7 +89,7 @@ public class CommandItem implements CommandExecutor {
 				superShovel.addEnchantments(SUPER_SHOVEL_ECHANTMENTS);
 				
 				p.getInventory().addItem(superShovel);
-				p.sendMessage("§7[§aItem§7]§r §aDiese Schaufel bewirkt wunder!");
+				p.sendMessage("§7[§aItem§7]§r §aDiese Schaufel bewirkt Wunder!");
 			} else {
 				Material material = null;
 
