@@ -79,7 +79,7 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onBlockPlace(BlockPlaceEvent e) {
-		if ((e.getItemInHand().getType().equals(Material.BEDROCK) || e.getItemInHand().getType().equals(Material.DRAGON_EGG)) && !e.getPlayer().isOp() || !Main.getInstance().getWorldGuard().canBuild(e.getPlayer(), e.getBlock()))
+		if ((e.getItemInHand().getType().equals(Material.BARRIER) || e.getItemInHand().getType().equals(Material.BEDROCK) || e.getItemInHand().getType().equals(Material.DRAGON_EGG)) && !e.getPlayer().isOp() || !Main.getInstance().getWorldGuard().canBuild(e.getPlayer(), e.getBlock()))
 			e.setCancelled(true);
 	}
 
