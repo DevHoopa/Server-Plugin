@@ -80,7 +80,7 @@ public class Main extends JavaPlugin {
 
 			@Override
 			public void run() {
-				Main.this.getServer().broadcastMessage("§7[§aClearLag§7]§r §e60§r Sekunden bevor alle Items auf dem Boden entfernt werden.");
+				Main.this.getServer().broadcastMessage("§7[§aClearLag§7]§r §e10§r Sekunden bevor alle Items auf dem Boden entfernt werden.");
 				
 				new BukkitRunnable() {
 
@@ -94,10 +94,10 @@ public class Main extends JavaPlugin {
 						}
 					}
 					
-				}.runTaskLater(Main.this, 60 * 20);
+				}.runTaskLater(Main.this, 10 * 20);
 			}
 			
-		}.runTaskTimer(this, 0, (60 * 15) * 20);
+		}.runTaskTimer(this, 0, (60 * 10) * 20);
 	}
 	
 	/**
