@@ -51,7 +51,7 @@ public class CommandItem implements CommandExecutor {
 				try {
 					material = Material.getMaterial(Integer.parseInt(args[0]));
 				} catch (NumberFormatException ex) {
-					material = Material.getMaterial(args[0]);
+					material = Material.getMaterial(args[0].toUpperCase());
 				}
 
 				if (material == null)
@@ -69,7 +69,6 @@ public class CommandItem implements CommandExecutor {
 		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("superaxe")) {
 				ItemStack superAxe = new ItemStack(Material.DIAMOND_PICKAXE);
-				
 				ItemMeta axeMeta = superAxe.getItemMeta();
 				axeMeta.setDisplayName("§b§lSuper Spitzhacke");
 				superAxe.setItemMeta(axeMeta);
@@ -96,7 +95,7 @@ public class CommandItem implements CommandExecutor {
 				try {
 					material = Material.getMaterial(Integer.parseInt(args[0]));
 				} catch (NumberFormatException ex) {
-					material = Material.getMaterial(args[0]);
+					material = Material.getMaterial(args[0].toUpperCase());
 				}
 
 				if (material == null)
