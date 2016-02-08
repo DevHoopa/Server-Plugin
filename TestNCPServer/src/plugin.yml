@@ -38,6 +38,6 @@ commands:
    freeze:
       description: Friert Spieler ein
       command: /freeze
-   blocks:
-      description: Gibt dir Blöcke
-      command: /blocks
+   item:
+      description: Gibt dir allerlei Items
+      command: /item

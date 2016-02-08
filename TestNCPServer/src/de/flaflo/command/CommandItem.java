@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
  * 
  * @author Flaflo
  */
-public class CommandBlocks implements CommandExecutor {
+public class CommandItem implements CommandExecutor {
 
 	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
@@ -32,19 +32,16 @@ public class CommandBlocks implements CommandExecutor {
 				}
 
 				if (material == null)
-					p.sendMessage("§7[§aBlocks§7]§r §cDieser Block konnte nicht gefunen werden!");
+					p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunen werden!");
 				else {
 					amount = Integer.parseInt(args[1]);
 
 					p.getInventory().addItem(new ItemStack(material, amount));
 
-					if (amount > 1)
-						p.sendMessage("§7[§aBlocks§7]§r Du hast §7" + amount + " Blöcke§r erhalten.");
-					else
-						p.sendMessage("§7[§aBlocks§7]§r Du hast §7" + amount + " Blöcke§r erhalten.");
+					p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name()) + "§r erhalten.");
 				}
 			} catch (NumberFormatException ex) {
-				p.sendMessage("§7[§aBlocks§7]§r §cDu musst eine Zahl angeben!");
+				p.sendMessage("§7[§aItem§7]§r §cDu musst eine Zahl angeben!");
 			}
 		} else if (args.length == 1) {
 			Material material = null;
@@ -56,17 +53,17 @@ public class CommandBlocks implements CommandExecutor {
 			}
 
 			if (material == null)
-				p.sendMessage("§7[§aBlocks§7]§r §cDieser Block konnte nicht gefunen werden!");
+				p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunen werden!");
 			else {
 				p.getInventory().addItem(new ItemStack(material, amount));
 
-				p.sendMessage("§7[§aBlocks§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name()) + "§r erhalten.");
+				p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name()) + "§r erhalten.");
 			}
 		} else {
-			p.sendMessage("§7[§aBlocks§7]§r §c/blocks <id/name>");
-			p.sendMessage("§7[§aBlocks§7]§r §c/blocks <id/name> <anzahl>");
+			p.sendMessage("§7[§aBlock§7]§r §c/item <id/name>");
+			p.sendMessage("§7[§aBlocks§7]§r §c/item <id/name> <anzahl>");
 		}
-		
+
 		return false;
 	}
 
