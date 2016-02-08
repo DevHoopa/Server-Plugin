@@ -1,6 +1,5 @@
 package de.flaflo.listener;
 
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +18,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import de.flaflo.command.CommandAFK;
 import de.flaflo.command.CommandDamage;
 import de.flaflo.command.CommandHunger;
+import de.flaflo.main.Main;
 import de.flaflo.util.UPlayer;
 
 /**
@@ -70,13 +70,13 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onBlockBreak(BlockBreakEvent e) {
-		if (!e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+		if (!Main.getInstance().getWorldGuard().canBuild(e.getPlayer(), e.getBlock()))
 			e.setCancelled(true);
 	}
 
 	@EventHandler
 	private void onBlockPlace(BlockPlaceEvent e) {
-		if (!e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+		if (!Main.getInstance().getWorldGuard().canBuild(e.getPlayer(), e.getBlock()))
 			e.setCancelled(true);
 	}
 

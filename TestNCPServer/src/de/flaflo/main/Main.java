@@ -1,12 +1,21 @@
 package de.flaflo.main;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.sk89q.worldedit.IncompleteRegionException;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
+import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
 import de.flaflo.command.CommandAFK;
+import de.flaflo.command.CommandBlocks;
 import de.flaflo.command.CommandConsole;
 import de.flaflo.command.CommandDamage;
 import de.flaflo.command.CommandFly;
@@ -45,6 +54,7 @@ public class Main extends JavaPlugin {
 
 		addAllInputs();
 		startClearLag();
+		startResetFreebuild();
 	}
 	
 	/**
@@ -87,7 +97,38 @@ public class Main extends JavaPlugin {
 				}.runTaskLater(Main.this, 60 * 20);
 			}
 			
-		}.runTaskTimer(this, 0, (60 * 8) * 20);
+		}.runTaskTimer(this, 0, (60 * 15) * 20);
+	}
+	
+	/**
+	 * Startet den Freebuild Loop
+	 */
+	private void startResetFreebuild() {
+		new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				Main.this.getServer().broadcastMessage("§7[§aFreebuild§7]§r §e60§r Sekunden bevor der Freebuild zurückgesetzt wird.");
+				
+				new BukkitRunnable() {
+
+					@Override
+					public void run() {
+						Main.this.getServer().broadcastMessage("§7[§aFreebuild§7]§r Setze den Frebuild zurück!");
+						
+						CuboidSelection sel = new CuboidSelection(Main.this.getServer().getWorlds().get(0), new Location(Main.this.getServer().getWorlds().get(0), 780, 0, 150), new Location(Main.this.getServer().getWorlds().get(0), 761, 255, 131));
+						try {
+							Region region = sel.getRegionSelector().getRegion();
+							region.getWorld().regenerate(region, WorldEdit.getInstance().getEditSessionFactory().getEditSession(region.getWorld(), -1));							
+						} catch (IncompleteRegionException e) {
+							e.printStackTrace();
+						}
+					}
+					
+				}.runTaskLater(Main.this, 60 * 20);
+			}
+			
+		}.runTaskTimer(this, 0, (60 * 20) * 20);
 	}
 	
 	/**
@@ -113,14 +154,28 @@ public class Main extends JavaPlugin {
 		this.getCommand("hunger").setExecutor(new CommandHunger());
 		this.getCommand("afk").setExecutor(new CommandAFK());
 		this.getCommand("freeze").setExecutor(new CommandFreeze());
+		this.getCommand("blocks").setExecutor(new CommandBlocks());
 	}
 	
 	/**
 	 * Gibt die Momentane Instanz zurück
-	 * @return Main
+	 * @return die Main Instanz
 	 */
 	public static Main getInstance() {
 		return main;
+	}
+	
+	/**
+	 * Gibt das WorldGuard Plugin als dessen Instanz zurück
+	 * @return das WorldGuard Plugin
+	 */
+	public WorldGuardPlugin getWorldGuard() {
+	    Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
+
+	    if (plugin == null || !(plugin instanceof WorldGuardPlugin))
+	        return null;
+
+	    return (WorldGuardPlugin) plugin;
 	}
 	
 	/**
