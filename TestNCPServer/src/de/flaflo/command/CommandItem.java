@@ -32,7 +32,7 @@ public class CommandItem implements CommandExecutor {
 				}
 
 				if (material == null)
-					p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunen werden!");
+					p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunden werden!");
 				else {
 					amount = Integer.parseInt(args[1]);
 
@@ -53,7 +53,7 @@ public class CommandItem implements CommandExecutor {
 			}
 
 			if (material == null)
-				p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunen werden!");
+				p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunden werden!");
 			else {
 				p.getInventory().addItem(new ItemStack(material, amount));
 

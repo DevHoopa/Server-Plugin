@@ -114,7 +114,7 @@ public class Main extends JavaPlugin {
 
 					@Override
 					public void run() {
-						Main.this.getServer().broadcastMessage("§7[§aFreebuild§7]§r Setze den Frebuild zurück!");
+						Main.this.getServer().broadcastMessage("§7[§aFreebuild§7]§r Setze den Frebuild zurück...");
 						
 						CuboidSelection sel = new CuboidSelection(Main.this.getServer().getWorlds().get(0), new Location(Main.this.getServer().getWorlds().get(0), 780, 0, 150), new Location(Main.this.getServer().getWorlds().get(0), 761, 255, 131));
 						try {
