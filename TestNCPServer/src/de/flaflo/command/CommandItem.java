@@ -67,6 +67,7 @@ public class CommandItem implements CommandExecutor {
 		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("superaxe")) {
 				ItemStack superAxe = new ItemStack(Material.DIAMOND_PICKAXE);
+				superAxe.getItemMeta().setDisplayName("§b§lSuper Spitzhacke");
 				superAxe.addEnchantments(SUPER_AXE_ECHANTMENTS);
 				
 				p.getInventory().addItem(superAxe);
@@ -74,6 +75,7 @@ public class CommandItem implements CommandExecutor {
 			}
 			if (args[0].equalsIgnoreCase("superaxe")) {
 				ItemStack superShovel = new ItemStack(Material.DIAMOND_SPADE);
+				superShovel.getItemMeta().setDisplayName("§b§lSuper Schaufel");
 				superShovel.addEnchantments(SUPER_SHOVEL_ECHANTMENTS);
 				
 				p.getInventory().addItem(superShovel);
