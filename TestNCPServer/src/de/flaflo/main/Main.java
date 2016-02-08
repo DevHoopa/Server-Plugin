@@ -15,13 +15,14 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import de.flaflo.command.CommandAFK;
-import de.flaflo.command.CommandItem;
+import de.flaflo.command.CommandClear;
 import de.flaflo.command.CommandConsole;
 import de.flaflo.command.CommandDamage;
 import de.flaflo.command.CommandFly;
 import de.flaflo.command.CommandFreeze;
 import de.flaflo.command.CommandHeal;
 import de.flaflo.command.CommandHunger;
+import de.flaflo.command.CommandItem;
 import de.flaflo.command.CommandOPApple;
 import de.flaflo.command.CommandPing;
 import de.flaflo.command.CommandSpawn;
@@ -155,7 +156,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("afk").setExecutor(new CommandAFK());
 		this.getCommand("freeze").setExecutor(new CommandFreeze());
 		this.getCommand("item").setExecutor(new CommandItem());
-		this.getCommand("clear").setExecutor(new CommandItem());
+		this.getCommand("clear").setExecutor(new CommandClear());
 	}
 	
 	/**
