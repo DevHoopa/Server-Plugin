@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -12,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -85,6 +87,13 @@ public class MainListener implements Listener {
 	private void onJoin(PlayerJoinEvent e) {
 		UPlayer.spawn(e.getPlayer(), false);
 		e.getPlayer().chat("/testncp input " + e.getPlayer().getName());
+	}
+	
+	@EventHandler
+	private void onInteract(PlayerInteractEvent e) {
+		if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
+			if (e.getItem().getType().equals(Material.MINECART) || e.getItem().getType().equals(Material.STORAGE_MINECART) || e.getItem().getType().equals(Material.COMMAND_MINECART) || e.getItem().getType().equals(Material.EXPLOSIVE_MINECART) ||  e.getItem().getType().equals(Material.HOPPER_MINECART) || e.getItem().getType().equals(Material.POWERED_MINECART))
+				e.setCancelled(true);
 	}
 	
 	@EventHandler
