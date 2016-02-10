@@ -50,12 +50,19 @@ public class CommandWarp implements CommandExecutor {
 				
 				return false;
 			} else if (args[0].equalsIgnoreCase("spawn")) {
+				
+				if (UPlayer.TELEPORTING_PLAYERS.contains(p))
+					return false;
+				
 				p.sendMessage("§7[§aWarp§7]§r Teleportiere zu spawn...");
 
 				UPlayer.spawn(p, true);
 				
 				return false;
 			}
+			
+			if (UPlayer.TELEPORTING_PLAYERS.contains(p))
+				return false;
 			
 			final String warpName = args[0].toLowerCase();
 

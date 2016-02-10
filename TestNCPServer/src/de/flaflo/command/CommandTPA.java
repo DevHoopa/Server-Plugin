@@ -20,7 +20,7 @@ import de.flaflo.util.UPlayer;
  */
 public class CommandTPA implements CommandExecutor {
 
-	private static HashMap<UUID, UUID> requestQueue = new HashMap<UUID, UUID>();
+	private static final HashMap<UUID, UUID> requestQueue = new HashMap<UUID, UUID>();
 	
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
 		Player p = (Player) arg0;

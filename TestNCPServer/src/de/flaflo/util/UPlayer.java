@@ -1,5 +1,7 @@
 package de.flaflo.util;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -10,6 +12,7 @@ import de.flaflo.main.Main;
 import net.minecraft.server.v1_8_R2.ChunkCoordIntPair;
 import net.minecraft.server.v1_8_R2.EntityHuman;
 import net.minecraft.server.v1_8_R2.EntityPlayer;
+import net.minecraft.server.v1_8_R2.World;
 
 /**
  * Allgeimeine Utilities für den Spieler
@@ -18,15 +21,17 @@ import net.minecraft.server.v1_8_R2.EntityPlayer;
  */
 public class UPlayer {
 	
+	public static final CopyOnWriteArrayList<Player> TELEPORTING_PLAYERS = new CopyOnWriteArrayList<Player>();
+	
 	/**
-	 * Sender Chunkupdates an einen Spieler
+	 * Sendet Chunkupdates an einen Spieler
 	 */
 	public static void sendChunkUpdates() {
 		int xDiff, yDiff;
 		int viewDistance = Bukkit.getServer().getViewDistance() << 4;
 		
 		for (Chunk chunk : Bukkit.getWorlds().get(0).getLoadedChunks()) {
-			net.minecraft.server.v1_8_R2.World world = ((org.bukkit.craftbukkit.v1_8_R2.CraftChunk) chunk).getHandle().world;
+			World world = ((org.bukkit.craftbukkit.v1_8_R2.CraftChunk) chunk).getHandle().world;
 			
 		    for (EntityHuman eh : world.players) {
 		    	if (eh instanceof EntityPlayer) {
@@ -50,11 +55,15 @@ public class UPlayer {
 	 * @param delay
 	 */
 	public static void teleport(Player p, Location loc, long delay) {
+		TELEPORTING_PLAYERS.add(p);
+		
 		new Delay() {
 
 			@Override
 			public void run() {
 				p.teleport(loc);
+		
+				TELEPORTING_PLAYERS.remove(p);
 			}
 
 		}.start(delay * 1000L);
@@ -63,15 +72,19 @@ public class UPlayer {
 	/**
 	 * Teleportiert den Spieler zum gewünschten Spieler
 	 * 
-	 * @param p1
-	 * @param p2
-	 * @param delay
+	 * @param p1 Spieler 1
+	 * @param p2 Spieler 2
+	 * @param delay Verzögerung
 	 */
 	public static void teleport(Player p1, Player p2, long delay) {
+		TELEPORTING_PLAYERS.add(p1);
+		
 		new Delay() {
 			@Override
 			public void run() {
 				p1.teleport(p2.getLocation());
+				
+				TELEPORTING_PLAYERS.remove(p1);
 			}
 
 		}.start(delay * 1000L);

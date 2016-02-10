@@ -19,12 +19,12 @@ public class CommandFreeze implements CommandExecutor {
 
 		private boolean isRunning;
 
-		private Player victim;
+		private String victim;
 		private Location freezeBack;
 		private GameMode gameModeBefore;
 
 		public FreezeTask(Player p) {
-			victim = p;
+			victim = p.getName();
 			freezeBack = p.getLocation();
 			gameModeBefore = p.getGameMode();
 		}
@@ -47,7 +47,10 @@ public class CommandFreeze implements CommandExecutor {
 
 				@Override
 				public void run() {
-					FreezeTask.this.victim.setGameMode(FreezeTask.this.gameModeBefore);
+					Player p = Main.getInstance().getServer().getPlayer(FreezeTask.this.victim);
+					
+					if (p != null)
+						p.setGameMode(FreezeTask.this.gameModeBefore);
 				}
 			}.runTask(Main.getInstance());
 		}
@@ -59,13 +62,16 @@ public class CommandFreeze implements CommandExecutor {
 				@Override
 				public void run() {
 					if (FreezeTask.this.isRunning) {
-						Player vic = FreezeTask.this.victim;
-						Location loc = FreezeTask.this.freezeBack;
-
-						vic.teleport(loc);
-						vic.setGameMode(GameMode.ADVENTURE);
+						Player vic = Main.getInstance().getServer().getPlayer(FreezeTask.this.victim);
 						
-						loc.getWorld().playEffect(loc, Effect.SNOWBALL_BREAK, 1);
+						if (vic != null) {
+							Location loc = FreezeTask.this.freezeBack;
+	
+							vic.teleport(loc);
+							vic.setGameMode(GameMode.ADVENTURE);
+							
+							loc.getWorld().playEffect(loc, Effect.SNOWBALL_BREAK, 1);
+						}
 					} else
 						this.cancel();
 				}
@@ -78,7 +84,7 @@ public class CommandFreeze implements CommandExecutor {
 		 * 
 		 * @return
 		 */
-		public Player getVictim() {
+		public String getVictim() {
 			return victim;
 		}
 
@@ -117,8 +123,6 @@ public class CommandFreeze implements CommandExecutor {
 	public CommandFreeze() {
 		freezeTasks = new HashMap<Player, FreezeTask>();
 	}
-
-
 	
 	/**
 	 * Friert einen Spieler an seiner Position ein
@@ -150,12 +154,10 @@ public class CommandFreeze implements CommandExecutor {
 	 * @return
 	 */
 	private boolean freeze(Player p, boolean freezed) {
-		System.out.println(freezed);
 		if (freezed) {
 			FreezeTask ft = new FreezeTask(p);
 			freezeTasks.put(p, ft);
 			ft.start();
-			
 			
 			return true;
 		} else {
@@ -173,7 +175,7 @@ public class CommandFreeze implements CommandExecutor {
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
 		Player p = (Player) arg0;
 		
-		if (!p.isOp() || !p.hasPermission("server.command.dispatch")) {
+		if (!p.isOp() || !p.hasPermission("freeze.toggle")) {
 			p.sendMessage("§7[§aFreeze§7]§r §cDu besitzt nicht genügend Rechte!");
 		
 			return false;

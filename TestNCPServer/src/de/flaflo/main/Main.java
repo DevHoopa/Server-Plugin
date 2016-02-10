@@ -26,6 +26,7 @@ import de.flaflo.command.CommandTPA;
 import de.flaflo.command.CommandWarp;
 import de.flaflo.listener.MainListener;
 import de.flaflo.settings.Settings;
+import de.flaflo.util.UMisc;
 
 /**
  * Hauptklasse für das Serverplugin
@@ -110,7 +111,7 @@ public class Main extends JavaPlugin {
 
 					@Override
 					public void run() {
-						
+						UMisc.resetFreebuild();
 					}
 
 				}.runTaskLater(Main.this, 60 * 20);

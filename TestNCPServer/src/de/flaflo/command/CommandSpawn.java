@@ -20,6 +20,9 @@ public class CommandSpawn implements CommandExecutor {
 		if (args.length == 0) {
 			Player p = (Player) arg0;
 
+			if (UPlayer.TELEPORTING_PLAYERS.contains(p))
+				return false;
+			
 			p.sendMessage("§7[§aSpawn§7]§r Teleportiere zum Spawn...");
 		
 			UPlayer.spawn(p, true);
