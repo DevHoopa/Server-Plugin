@@ -18,7 +18,7 @@ public class CommandFreebuild implements CommandExecutor {
 			if (arg0.isOp()) {
 				UMisc.resetFreebuild();
 				
-				arg0.sendMessage("§7[§aFreebuild§7]$r Freebuild erfolgreich zurückgesetzt.");
+				arg0.sendMessage("§7[§aFreebuild§7]§r Freebuild erfolgreich zurückgesetzt.");
 			} else
 				arg0.sendMessage("§7[§aFreebuild§7]§c Du besitzt nicht genügend Rechte!");
 		} else
