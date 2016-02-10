@@ -1,6 +1,7 @@
 package de.flaflo.listener;
 
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,6 +51,9 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onCreatureSpawn(CreatureSpawnEvent e) {
+		if (e.getEntityType().equals(EntityType.WITHER) || e.getEntityType().equals(EntityType.ARMOR_STAND) || e.getEntityType().equals(EntityType.IRON_GOLEM) ||  e.getEntityType().equals(EntityType.SNOWMAN))
+			e.setCancelled(true);
+		
 		if (e.getSpawnReason().equals(SpawnReason.NATURAL))
 			e.setCancelled(true);
 	}
@@ -92,7 +96,7 @@ public class MainListener implements Listener {
 	@EventHandler
 	private void onInteract(PlayerInteractEvent e) {
 		if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
-			if (e.getItem().getType().equals(Material.MINECART) || e.getItem().getType().equals(Material.STORAGE_MINECART) || e.getItem().getType().equals(Material.COMMAND_MINECART) || e.getItem().getType().equals(Material.EXPLOSIVE_MINECART) ||  e.getItem().getType().equals(Material.HOPPER_MINECART) || e.getItem().getType().equals(Material.POWERED_MINECART))
+			if (e.getItem().getType().equals(Material.ARMOR_STAND) || e.getItem().getType().equals(Material.MINECART) || e.getItem().getType().equals(Material.STORAGE_MINECART) || e.getItem().getType().equals(Material.COMMAND_MINECART) || e.getItem().getType().equals(Material.EXPLOSIVE_MINECART) ||  e.getItem().getType().equals(Material.HOPPER_MINECART) || e.getItem().getType().equals(Material.POWERED_MINECART))
 				e.setCancelled(true);
 	}
 	

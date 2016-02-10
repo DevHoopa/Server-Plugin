@@ -1,9 +1,16 @@
 package de.flaflo.util;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import de.flaflo.main.Main;
+
+//TODO Fix this
+import net.minecraft.server.v1_8_R2.ChunkCoordIntPair;
+import net.minecraft.server.v1_8_R2.EntityHuman;
+import net.minecraft.server.v1_8_R2.EntityPlayer;
 
 /**
  * Allgeimeine Utilities für den Spieler
@@ -11,7 +18,31 @@ import de.flaflo.main.Main;
  * @author Flaflo
  */
 public class UPlayer {
-
+	
+	/**
+	 * Sender Chunkupdates an einen Spieler
+	 */
+	public static void sendChunkUpdates() {
+		int xDiff, yDiff;
+		int viewDistance = Bukkit.getServer().getViewDistance() << 4;
+		
+		for (Chunk chunk : Bukkit.getWorlds().get(0).getLoadedChunks()) {
+			net.minecraft.server.v1_8_R2.World world = ((org.bukkit.craftbukkit.v1_8_R2.CraftChunk) chunk).getHandle().world;
+			
+		    for (EntityHuman eh : world.players) {
+		    	if (eh instanceof EntityPlayer) {
+		    		EntityPlayer ep = (EntityPlayer) eh;
+		    		
+			        xDiff = Math.abs((int) ep.locX - chunk.getX() << 4);
+			        yDiff = Math.abs((int) ep.locZ - chunk.getZ() << 4);
+			        
+			        if (xDiff <= viewDistance && yDiff <= viewDistance)
+			            ep.chunkCoordIntPairQueue.add(new ChunkCoordIntPair(chunk.getX(), chunk.getZ()));
+		    	}
+		    }
+		}
+	}
+	
 	/**
 	 * Teleportiert den Spieler an die gewüschnte Position
 	 * 

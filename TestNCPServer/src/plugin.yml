@@ -1,6 +1,7 @@
 name: Server
 main: de.flaflo.main.Main
-version: 1.2
+version: 1.6
+depend: [WorldEdit]
 commands:
    ping:
       description: Eigenen Ping auslesen
@@ -44,3 +45,6 @@ commands:
    clear:
       description: Leert das Inventar
       command: /clear
+   freebuild:
+      description: Freebuild Befehle
+      command: /freebuild
