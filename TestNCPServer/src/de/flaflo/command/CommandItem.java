@@ -31,6 +31,9 @@ public class CommandItem implements CommandExecutor {
 			add(Material.POWERED_MINECART);
 			add(Material.STORAGE_MINECART);
 			add(Material.BOAT);
+			add(Material.BARRIER);
+			add(Material.BEDROCK);
+			add(Material.DRAGON_EGG);
 		}
 	};
 

@@ -1,6 +1,5 @@
 package de.flaflo.listener;
 
-import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -81,7 +80,7 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onBlockPlace(BlockPlaceEvent e) {
-		if ((e.getItemInHand().getType().equals(Material.BARRIER) || e.getItemInHand().getType().equals(Material.BEDROCK) || e.getItemInHand().getType().equals(Material.DRAGON_EGG)) && !e.getPlayer().isOp() || !Main.getInstance().getWorldGuard().canBuild(e.getPlayer(), e.getBlock()))
+		if ((!e.getPlayer().isOp() || !Main.getInstance().getWorldGuard().canBuild(e.getPlayer(), e.getBlock())))
 			e.setCancelled(true);
 	}
 
