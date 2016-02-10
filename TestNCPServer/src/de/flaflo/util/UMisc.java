@@ -3,6 +3,7 @@ package de.flaflo.util;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,8 +16,6 @@ import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import com.sk89q.worldedit.regions.Region;
 
 import de.flaflo.main.Main;
-
-import java.util.Objects;
 
 /**
  * Verschiedene Utilities

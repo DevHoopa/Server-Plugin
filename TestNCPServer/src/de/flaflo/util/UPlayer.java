@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import de.flaflo.main.Main;
-
 //TODO Fix this
 import net.minecraft.server.v1_8_R2.ChunkCoordIntPair;
 import net.minecraft.server.v1_8_R2.EntityHuman;
