@@ -1,5 +1,6 @@
 package de.flaflo.command;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,19 @@ import org.bukkit.inventory.meta.ItemMeta;
  * @author Flaflo
  */
 public class CommandItem implements CommandExecutor {
+
+	public static final ArrayList<Material> RESTRICTED_MATERIALS = new ArrayList<Material>() {
+		private static final long serialVersionUID = -8474898387097438744L;
+		{
+			add(Material.MINECART);
+			add(Material.COMMAND_MINECART);
+			add(Material.EXPLOSIVE_MINECART);
+			add(Material.HOPPER_MINECART);
+			add(Material.POWERED_MINECART);
+			add(Material.STORAGE_MINECART);
+			add(Material.BOAT);
+		}
+	};
 
 	public static final Map<Enchantment, Integer> SUPER_AXE_ECHANTMENTS;
 	public static final Map<Enchantment, Integer> SUPER_SHOVEL_ECHANTMENTS;
@@ -57,11 +71,14 @@ public class CommandItem implements CommandExecutor {
 				if (material == null)
 					p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunden werden!");
 				else {
-					amount = Integer.parseInt(args[1]);
-
-					p.getInventory().addItem(new ItemStack(material, amount));
-
-					p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name().replace("_", " ")) + "§r erhalten.");
+					if (!RESTRICTED_MATERIALS.contains(material)) {
+						amount = Integer.parseInt(args[1]);
+	
+						p.getInventory().addItem(new ItemStack(material, amount));
+	
+						p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name().replace("_", " ")) + "§r erhalten.");
+					} else
+						p.sendMessage("§7[§aItem§7]§c Dieses Item ist verboten!");
 				}
 			} catch (NumberFormatException ex) {
 				p.sendMessage("§7[§aItem§7]§r §cDu musst eine Zahl angeben!");
@@ -72,20 +89,20 @@ public class CommandItem implements CommandExecutor {
 				ItemMeta axeMeta = superAxe.getItemMeta();
 				axeMeta.setDisplayName("§b§lSuper Spitzhacke");
 				superAxe.setItemMeta(axeMeta);
-				
+
 				superAxe.addEnchantments(SUPER_AXE_ECHANTMENTS);
-				
+
 				p.getInventory().addItem(superAxe);
 				p.sendMessage("§7[§aItem§7]§r §aDiese Spitzhacke bewirkt Wunder!");
 			} else if (args[0].equalsIgnoreCase("supershovel")) {
 				ItemStack superShovel = new ItemStack(Material.DIAMOND_SPADE);
-				
+
 				ItemMeta shovelMeta = superShovel.getItemMeta();
 				shovelMeta.setDisplayName("§b§lSuper Schaufel");
 				superShovel.setItemMeta(shovelMeta);
-				
+
 				superShovel.addEnchantments(SUPER_SHOVEL_ECHANTMENTS);
-				
+
 				p.getInventory().addItem(superShovel);
 				p.sendMessage("§7[§aItem§7]§r §aDiese Schaufel bewirkt Wunder!");
 			} else {
@@ -100,14 +117,17 @@ public class CommandItem implements CommandExecutor {
 				if (material == null)
 					p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunden werden!");
 				else {
-					p.getInventory().addItem(new ItemStack(material, amount));
+					if (!RESTRICTED_MATERIALS.contains(material)) {
+						p.getInventory().addItem(new ItemStack(material, amount));
 
-					p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name().replace("_", " ")) + "§r erhalten.");
+						p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name().replace("_", " ")) + "§r erhalten.");
+					} else
+						p.sendMessage("§7[§aItem§7]§c Dieses Item ist verboten!");
 				}
 			}
 		} else {
-			p.sendMessage("§7[§aItem§7]§r §c/item <id/name>");
-			p.sendMessage("§7[§aItem§7]§r §c/item <id/name> <anzahl>");
+			p.sendMessage("§7[§aItem§7]§c /item <id/name>");
+			p.sendMessage("§7[§aItem§7]§c /item <id/name> <anzahl>");
 		}
 
 		return false;
