@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.IncompleteRegionException;
@@ -66,6 +68,16 @@ public class UMisc {
 		}
 		
 		UPlayer.sendChunkUpdates();
+		
+		clearLag();
+	}
+	
+	public static void clearLag() {
+		Main.getInstance().getServer().broadcastMessage("§7[§aClearLag§7]§r Entferne alle Items auf dem Boden...");
+		
+		for (Entity e : Main.getInstance().getServer().getWorlds().get(0).getEntities())
+			if (e instanceof Item)
+				e.remove();
 	}
 	
 	private static Region createRegionFromCuboidSelection(final CuboidSelection sel) {
