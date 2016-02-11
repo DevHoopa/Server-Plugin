@@ -90,7 +90,7 @@ public class MainListener implements Listener {
 
 		e.setCancelled(true);
 		
-		Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + (player.isOp() ? ChatColor.RED + "[Admin] " + ChatColor.RESET : ChatColor.GREEN + "[Tester] " + ChatColor.RESET) + player.getName() +  "> " + e.getMessage());
+		Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + (player.isOp() ? ChatColor.RED + "[Admin] " + ChatColor.RESET : ChatColor.GREEN + "[Tester] " + ChatColor.RESET) + player.getName() +  ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
 	}
 
 }
