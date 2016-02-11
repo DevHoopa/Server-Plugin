@@ -4,13 +4,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -20,9 +20,10 @@ import de.flaflo.command.CommandDamage;
 import de.flaflo.command.CommandHunger;
 import de.flaflo.main.Main;
 import de.flaflo.util.UPlayer;
+import net.md_5.bungee.api.ChatColor;
 
 /**
- * Hauptklasse für alle Listener
+ * Hauptklasse fÃ¼r alle Listener
  * 
  * @author Flaflo
  */
@@ -72,12 +73,6 @@ public class MainListener implements Listener {
 	}
 
 	@EventHandler
-	private void onBlockBreak(BlockBreakEvent e) {
-		if (!Main.getInstance().getWorldGuard().canBuild(e.getPlayer(), e.getBlock()))
-			e.setCancelled(true);
-	}
-
-	@EventHandler
 	private void onJoin(PlayerJoinEvent e) {
 		UPlayer.spawn(e.getPlayer(), false);
 		e.getPlayer().chat("/testncp input " + e.getPlayer().getName());
@@ -87,6 +82,15 @@ public class MainListener implements Listener {
 	private void onLeave(PlayerQuitEvent e) {
 		if (CommandAFK.getAfkPlayers().contains(e.getPlayer().getUniqueId()))
 			CommandAFK.getAfkPlayers().remove(e.getPlayer().getUniqueId());
+	}
+	
+	@EventHandler
+	private void onChat(AsyncPlayerChatEvent e) {
+		Player player = e.getPlayer();
+
+		e.setCancelled(true);
+		
+		Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + (player.isOp() ? ChatColor.RED + "[Admin] " + ChatColor.RESET : ChatColor.GREEN + "[Tester] " + ChatColor.RESET) + player.getName() +  "> " + e.getMessage());
 	}
 
 }
