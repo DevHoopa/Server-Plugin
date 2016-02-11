@@ -85,10 +85,9 @@ public class Main extends JavaPlugin {
 					public void run() {
 						Main.this.getServer().broadcastMessage("§7[§aClearLag§7]§r Entferne alle Items auf dem Boden...");
 
-						for (Entity e : Main.this.getServer().getWorlds().get(0).getEntities()) {
+						for (Entity e : Main.this.getServer().getWorlds().get(0).getEntities())
 							if (e instanceof Item)
 								e.remove();
-						}
 					}
 
 				}.runTaskLater(Main.this, 5 * 20);
