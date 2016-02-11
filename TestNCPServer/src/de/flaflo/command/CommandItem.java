@@ -35,6 +35,8 @@ public class CommandItem implements CommandExecutor {
 			add(Material.BARRIER);
 			add(Material.BEDROCK);
 			add(Material.DRAGON_EGG);
+			add(Material.DISPENSER);
+			add(Material.ANVIL);
 		}
 	};
 
