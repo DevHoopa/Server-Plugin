@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -75,12 +74,6 @@ public class MainListener implements Listener {
 	@EventHandler
 	private void onBlockBreak(BlockBreakEvent e) {
 		if (!Main.getInstance().getWorldGuard().canBuild(e.getPlayer(), e.getBlock()))
-			e.setCancelled(true);
-	}
-
-	@EventHandler
-	private void onBlockPlace(BlockPlaceEvent e) {
-		if ((!e.getPlayer().isOp() || !Main.getInstance().getWorldGuard().canBuild(e.getPlayer(), e.getBlock())))
 			e.setCancelled(true);
 	}
 
