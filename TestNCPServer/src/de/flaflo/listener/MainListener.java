@@ -1,5 +1,7 @@
 package de.flaflo.listener;
 
+import java.text.ParseException;
+
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -92,7 +94,11 @@ public class MainListener implements Listener {
 		e.setCancelled(true);
 		
 		if (CommandMute.isPlayerMuted(player))
-			player.sendMessage("§7[§aMute§7]§c Du bist noch bis " + (CommandMute.playerMutedUntil(player) == CommandMute.DATE_INFINITY ? "permanent" : CommandMute.playerMutedUntil(player)) + " gemuted!");
+			try {
+				player.sendMessage("§7[§aMute§7]§c Du bist " + (CommandMute.playerMutedUntil(player) == CommandMute.DATE_INFINITY ? "PERMANENT" : "noch bis " + CommandMute.MUTE_PARSE_FORMAT_1.parse(CommandMute.playerMutedUntil(player).toString())) + " gemuted!");
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
 		else
 			Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + (player.isOp() || player.hasPermission("chat.admin") ? ChatColor.RED + "[Admin] " + ChatColor.RESET : ChatColor.GREEN + "[Tester] " + ChatColor.RESET) + player.getName() +  ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
 	}

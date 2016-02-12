@@ -114,6 +114,8 @@ public class CommandMute implements CommandExecutor {
 	 */
 	public static void mutePlayer(Player player, Date date) {
 		MUTED_PLAYERS.put(player.getUniqueId(), date);
+		
+		player.sendMessage("§7[§aMute§7]§c§l Du wurdest gemuted!");
 	}
 	
 	/**
