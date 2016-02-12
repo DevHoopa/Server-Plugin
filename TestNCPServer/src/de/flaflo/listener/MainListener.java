@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import de.flaflo.command.CommandAFK;
 import de.flaflo.command.CommandDamage;
 import de.flaflo.command.CommandHunger;
+import de.flaflo.command.CommandMute;
 import de.flaflo.main.Main;
 import de.flaflo.util.UPlayer;
 import net.md_5.bungee.api.ChatColor;
@@ -90,7 +91,10 @@ public class MainListener implements Listener {
 
 		e.setCancelled(true);
 		
-		Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + (player.isOp() || player.hasPermission("chat.admin") ? ChatColor.RED + "[Admin] " + ChatColor.RESET : ChatColor.GREEN + "[Tester] " + ChatColor.RESET) + player.getName() +  ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
+		if (CommandMute.isPlayerMuted(player))
+			player.sendMessage("§7[§aMute§7]§c Du bist noch bis " + (CommandMute.playerMutedUntil(player) == CommandMute.DATE_INFINITY ? "permanent" : CommandMute.playerMutedUntil(player)) + " gemuted!");
+		else
+			Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + (player.isOp() || player.hasPermission("chat.admin") ? ChatColor.RED + "[Admin] " + ChatColor.RESET : ChatColor.GREEN + "[Tester] " + ChatColor.RESET) + player.getName() +  ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
 	}
 
 }

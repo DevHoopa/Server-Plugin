@@ -1,5 +1,6 @@
 package de.flaflo.util;
 
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.Bukkit;
@@ -100,4 +101,16 @@ public class UPlayer {
 		teleport(p, Main.getInstance().getSettings().getSpawn(), delayed ? 2L: 0L);
 	}
 
+	/**
+	 * Sucht und gibt einen Spieler anhand seiner UUID zurück
+	 * @param uuid UUID des gesuchten Spielers
+	 * @return Den gesuchten Spieler
+	 */
+	public static Player getPlayerByUUID(UUID uuid) {
+		for (Player player : Main.getInstance().getServer().getOnlinePlayers())
+			if (player.getUniqueId().equals(uuid))
+				return player;
+		
+		return null;
+	}
 }

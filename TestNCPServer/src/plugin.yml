@@ -48,3 +48,6 @@ commands:
    freebuild:
       description: Freebuild Befehle
       command: /freebuild
+   mute:
+      description: Spieler ent/muten
+      command: /mute

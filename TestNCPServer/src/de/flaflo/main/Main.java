@@ -17,6 +17,7 @@ import de.flaflo.command.CommandFreeze;
 import de.flaflo.command.CommandHeal;
 import de.flaflo.command.CommandHunger;
 import de.flaflo.command.CommandItem;
+import de.flaflo.command.CommandMute;
 import de.flaflo.command.CommandOPApple;
 import de.flaflo.command.CommandPing;
 import de.flaflo.command.CommandSpawn;
@@ -139,6 +140,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("item").setExecutor(new CommandItem());
 		this.getCommand("clear").setExecutor(new CommandClear());
 		this.getCommand("freebuild").setExecutor(new CommandFreebuild());
+		this.getCommand("mute").setExecutor(new CommandMute());
 	}
 
 	/**
