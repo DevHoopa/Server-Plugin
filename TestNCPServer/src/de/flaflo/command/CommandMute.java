@@ -22,7 +22,7 @@ public class CommandMute implements CommandExecutor {
 	
 	public static final Date DATE_INFINITY = new Date(Long.MAX_VALUE);
 	
-	public static final SimpleDateFormat MUTE_PARSE_FORMAT_1 = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss");
+	public static final SimpleDateFormat MUTE_PARSE_FORMAT_1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	public static final SimpleDateFormat MUTE_PARSE_FORMAT_2 = new SimpleDateFormat("HH:mm:ss");
 	public static final SimpleDateFormat MUTE_PARSE_FORMAT_3 = new SimpleDateFormat("mm:ss");
 	public static final SimpleDateFormat MUTE_PARSE_FORMAT_4 = new SimpleDateFormat("HH");
