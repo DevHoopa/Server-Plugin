@@ -1,7 +1,5 @@
 package de.flaflo.listener;
 
-import java.text.ParseException;
-
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,12 +34,12 @@ public class MainListener implements Listener {
 	private void onPlayerMove(PlayerMoveEvent e) {
 		if (e.getFrom().distance(e.getTo()) > 0.15) {
 			Player p = e.getPlayer();
-			
+
 			if (CommandAFK.getAfkPlayers().contains(p.getUniqueId()))
 				CommandAFK.unsetAFK(p);
 		}
 	}
-	
+
 	@EventHandler
 	private void onFoodLevelChanged(FoodLevelChangeEvent e) {
 		if (e.getEntity() instanceof Player)
@@ -51,9 +49,9 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onCreatureSpawn(CreatureSpawnEvent e) {
-		if (e.getEntityType().equals(EntityType.WITHER) || e.getEntityType().equals(EntityType.ARMOR_STAND) || e.getEntityType().equals(EntityType.IRON_GOLEM) ||  e.getEntityType().equals(EntityType.SNOWMAN))
+		if (e.getEntityType().equals(EntityType.WITHER) || e.getEntityType().equals(EntityType.ARMOR_STAND) || e.getEntityType().equals(EntityType.IRON_GOLEM) || e.getEntityType().equals(EntityType.SNOWMAN))
 			e.setCancelled(true);
-		
+
 		if (e.getSpawnReason().equals(SpawnReason.NATURAL))
 			e.setCancelled(true);
 	}
@@ -63,7 +61,7 @@ public class MainListener implements Listener {
 		if (e.getEntity() instanceof Player)
 			if (!CommandDamage.getDamageablePlayers().contains(e.getEntity().getUniqueId()))
 				e.setCancelled(true);
-		
+
 		if (e.getCause().equals(DamageCause.POISON) || e.getCause().equals(DamageCause.MAGIC))
 			e.setCancelled(false);
 	}
@@ -80,27 +78,23 @@ public class MainListener implements Listener {
 		UPlayer.spawn(e.getPlayer(), false);
 		e.getPlayer().chat("/testncp input " + e.getPlayer().getName());
 	}
-	
+
 	@EventHandler
 	private void onLeave(PlayerQuitEvent e) {
 		if (CommandAFK.getAfkPlayers().contains(e.getPlayer().getUniqueId()))
 			CommandAFK.getAfkPlayers().remove(e.getPlayer().getUniqueId());
 	}
-	
+
 	@EventHandler
 	private void onChat(AsyncPlayerChatEvent e) {
 		Player player = e.getPlayer();
 
 		e.setCancelled(true);
-		
+
 		if (CommandMute.isPlayerMuted(player))
-			try {
-				player.sendMessage("§7[§aMute§7]§c Du bist " + (CommandMute.playerMutedUntil(player) == CommandMute.DATE_INFINITY ? "PERMANENT" : "noch bis " + CommandMute.MUTE_PARSE_FORMAT_1.parse(CommandMute.playerMutedUntil(player).toString())) + " gemuted!");
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
+			player.sendMessage("§7[§aMute§7]§c Du bist " + (CommandMute.playerMutedUntil(player) == CommandMute.DATE_INFINITY ? "PERMANENT" : "noch bis " + CommandMute.MUTE_PARSE_FORMAT_1.format(CommandMute.playerMutedUntil(player))) + " gemuted!");
 		else
-			Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + (player.isOp() || player.hasPermission("chat.admin") ? ChatColor.RED + "[Admin] " + ChatColor.RESET : ChatColor.GREEN + "[Tester] " + ChatColor.RESET) + player.getName() +  ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
+			Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + (player.isOp() || player.hasPermission("chat.admin") ? ChatColor.RED + "[Admin] " + ChatColor.RESET : ChatColor.GREEN + "[Tester] " + ChatColor.RESET) + player.getName() + ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
 	}
 
 }
