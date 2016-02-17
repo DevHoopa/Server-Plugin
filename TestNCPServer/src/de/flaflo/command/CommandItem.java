@@ -78,7 +78,7 @@ public class CommandItem implements CommandExecutor {
 				}
 
 				if (material == null)
-					p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunden werden!");
+					p.sendMessage("§7[§aItem§7]§r §cDieses Item konnte nicht gefunden werden.");
 				else {
 					if (!RESTRICTED_MATERIALS.contains(material)) {
 						amount = Integer.parseInt(args[1]);
@@ -90,7 +90,7 @@ public class CommandItem implements CommandExecutor {
 						p.sendMessage("§7[§aItem§7]§c Dieses Item ist verboten!");
 				}
 			} catch (NumberFormatException ex) {
-				p.sendMessage("§7[§aItem§7]§r §cDu musst eine Zahl angeben!");
+				p.sendMessage("§7[§aItem§7]§r §cDu musst eine Zahl angeben.");
 			}
 		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("superaxe")) {
@@ -124,14 +124,14 @@ public class CommandItem implements CommandExecutor {
 				}
 
 				if (material == null)
-					p.sendMessage("§7[§aItem§7]§r §cDieser Block konnte nicht gefunden werden!");
+					p.sendMessage("§7[§aItem§7]§r §cDieses Item konnte nicht gefunden werden.");
 				else {
 					if (!RESTRICTED_MATERIALS.contains(material)) {
 						p.getInventory().addItem(new ItemStack(material, amount));
 
 						p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name().replace("_", " ")) + "§r erhalten.");
 					} else
-						p.sendMessage("§7[§aItem§7]§c Dieses Item ist verboten!");
+						p.sendMessage("§7[§aItem§7]§c Dieses Item ist verboten.");
 				}
 			}
 		} else {

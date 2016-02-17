@@ -36,9 +36,6 @@ commands:
    afk:
       description: AFK-Modus wechseln
       command: /afk
-   freeze:
-      description: Friert Spieler ein
-      command: /freeze
    item:
       description: Gibt dir allerlei Items
       command: /item

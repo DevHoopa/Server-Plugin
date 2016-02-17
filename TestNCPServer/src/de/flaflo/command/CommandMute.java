@@ -65,6 +65,7 @@ public class CommandMute implements CommandExecutor {
 				sender.sendMessage("§7[§aMute§7]§c /mute <player> <länge>");
 			else if (args.length == 2) {
 				Player playerToMute = Main.getInstance().getServer().getPlayer(args[0]);
+				
 				try {
 					Date date = new Date(MUTE_PARSE_FORMAT_2.parse(args[1]).getTime() + Calendar.getInstance().getTime().getTime());
 					date = Date.from(date.toInstant().plusSeconds(3600));
@@ -75,6 +76,7 @@ public class CommandMute implements CommandExecutor {
 				}
 			} else if (args.length == 1) {
 				Player playerToMute = Main.getInstance().getServer().getPlayer(args[0]);
+				
 				if (playerToMute != null) {
 					if (isPlayerMuted(playerToMute)) {
 						unmutePlayer(playerToMute);

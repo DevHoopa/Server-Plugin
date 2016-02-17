@@ -23,13 +23,11 @@ public class CommandSpawn implements CommandExecutor {
 			if (UPlayer.TELEPORTING_PLAYERS.contains(p))
 				return false;
 			
-			p.sendMessage("§7[§aSpawn§7]§r Teleportiere zum Spawn...");
-		
 			UPlayer.spawn(p, true);
 		} else if (args.length == 1) {
 			Player p = (Player) arg0;
 
-			if (args[0].equalsIgnoreCase("change") && (p.isOp() || p.hasPermission("server.spawn.set"))) {
+			if (args[0].equalsIgnoreCase("set") && (p.isOp() || p.hasPermission("server.spawn.set"))) {
 				Main.getInstance().getSettings().setSpawn(p.getLocation());
 
 				p.sendMessage("§7[§aSpawn§7]§r Spawn gesetzt.");

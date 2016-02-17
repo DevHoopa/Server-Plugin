@@ -98,6 +98,8 @@ public class UPlayer {
 	 * @param delayed
 	 */
 	public static void spawn(Player p, boolean delayed) {
+		p.sendMessage("§7[§aSpawn§7]§r Teleportiere zum Spawn...");
+		
 		teleport(p, Main.getInstance().getSettings().getSpawn(), delayed ? 2L: 0L);
 	}
 

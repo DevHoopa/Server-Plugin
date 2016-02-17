@@ -25,7 +25,7 @@ public class CommandConsole implements CommandExecutor {
 			if (!p.isOp() || !p.hasPermission("server.command.dispatch"))
 				p.sendMessage("§7[§aConsole§7]§r §cDu besitzt nicht genügend Rechte!");
 			else
-				p.sendMessage("§7[§aConsole§7]§r Benutze /c <commad>");
+				p.sendMessage("§7[§aConsole§7]§r /c <commad>");
 		} else if (args.length > 0) {
 			if (p.isOp() || p.hasPermission("server.command.dispatch")) {
 
@@ -62,7 +62,7 @@ public class CommandConsole implements CommandExecutor {
 					if (!response.isEmpty())
 						p.sendMessage("§7[§aConsole§7]§r " + baos.toString());
 					else
-						p.sendMessage("§7[§aConsole§7]§r Command erfolgreich ausgeführt");
+						p.sendMessage("§7[§aConsole§7]§r Command erfolgreich ausgeführt.");
 						
 					System.setOut(old);
 				} else
