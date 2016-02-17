@@ -22,6 +22,7 @@ import de.flaflo.command.CommandPing;
 import de.flaflo.command.CommandSpawn;
 import de.flaflo.command.CommandTPA;
 import de.flaflo.command.CommandWarp;
+import de.flaflo.command.CommandWhois;
 import de.flaflo.listener.MainListener;
 import de.flaflo.settings.Settings;
 import de.flaflo.util.UMisc;
@@ -139,6 +140,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("clear").setExecutor(new CommandClear());
 		this.getCommand("freebuild").setExecutor(new CommandFreebuild());
 		this.getCommand("mute").setExecutor(new CommandMute());
+		this.getCommand("whois").setExecutor(new CommandWhois());
 	}
 
 	/**
