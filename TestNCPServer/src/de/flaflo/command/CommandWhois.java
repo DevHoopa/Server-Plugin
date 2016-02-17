@@ -24,11 +24,11 @@ public class CommandWhois implements CommandExecutor {
 
 	public boolean onCommand(CommandSender cs, Command command, String label, String[] args) {
 		if(cs.isOp()) {
-			if(args.length != 2) {
+			if(args.length != 1) {
 				cs.sendMessage("§7[§aWhois§7]§c Syntax: /whois <player>");
 			}
 			
-			Player player = Bukkit.getServer().getPlayer(args[1]);
+			Player player = Bukkit.getServer().getPlayer(args[0]);
 			if(player != null) {
 				cs.sendMessage("§7################################################");
 				cs.sendMessage("§7[§aWhois§7]§c OP: " + player.isOp());
