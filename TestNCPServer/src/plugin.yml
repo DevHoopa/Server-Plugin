@@ -48,3 +48,6 @@ commands:
    mute:
       description: Spieler ent/muten
       command: /mute
+   whois:
+      description: Spieler stats
+      command: /whois <player>
