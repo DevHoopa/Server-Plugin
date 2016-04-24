@@ -66,6 +66,17 @@ public class Main extends JavaPlugin {
 			}
 
 		}.runTaskLater(this, 20L);
+		
+		new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				Main.this.getServer().broadcastMessage("§7[§c§lDonate§7]§r Du willst die Server weiterhin?");
+				Main.this.getServer().broadcastMessage("§7[§c§lDonate§7]§r Dann spende unter folgendem Link:");
+				Main.this.getServer().broadcastMessage("§7[§c§lDonate§7]§r http://goo.gl/G7D4iu");
+			}
+
+		}.runTaskTimer(this, 0, (60 * 8) * 20);
 	}
 
 	/**

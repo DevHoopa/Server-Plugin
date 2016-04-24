@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import de.flaflo.main.Main;
-//TODO Fix this
 import net.minecraft.server.v1_8_R2.ChunkCoordIntPair;
 import net.minecraft.server.v1_8_R2.EntityHuman;
 import net.minecraft.server.v1_8_R2.EntityPlayer;
@@ -36,13 +35,11 @@ public class UPlayer {
 			
 		    for (EntityHuman eh : world.players) {
 		    	if (eh instanceof EntityPlayer) {
-		    		EntityPlayer ep = (EntityPlayer) eh;
-		    		
-			        xDiff = Math.abs((int) ep.locX - chunk.getX() << 4);
-			        yDiff = Math.abs((int) ep.locZ - chunk.getZ() << 4);
+			        xDiff = Math.abs((int) eh.locX - chunk.getX() << 4);
+			        yDiff = Math.abs((int) eh.locZ - chunk.getZ() << 4);
 			        
 			        if (xDiff <= viewDistance && yDiff <= viewDistance)
-			            ep.chunkCoordIntPairQueue.add(new ChunkCoordIntPair(chunk.getX(), chunk.getZ()));
+			            ((EntityPlayer) eh).chunkCoordIntPairQueue.add(new ChunkCoordIntPair(chunk.getX(), chunk.getZ()));
 		    	}
 		    }
 		}

@@ -37,13 +37,13 @@ public class CommandMute implements CommandExecutor {
 			@Override
 			public void run() {
 				for (Date date : MUTED_PLAYERS.values()) {
-					if (date == DATE_INFINITY)
+					if (date.equals(DATE_INFINITY))
 						continue;
 					
 					if (Calendar.getInstance().getTime().equals(date) || Calendar.getInstance().getTime().after(date)) {
 						
-						UUID playersUniqueId = UMisc.getKeyByValue(MUTED_PLAYERS, date);
-						Player player = UPlayer.getPlayerByUUID(playersUniqueId);
+						final UUID playersUniqueId = UMisc.getKeyByValue(MUTED_PLAYERS, date);
+						final Player player = UPlayer.getPlayerByUUID(playersUniqueId);
 						
 						MUTED_PLAYERS.remove(playersUniqueId);
 						
@@ -55,8 +55,6 @@ public class CommandMute implements CommandExecutor {
 		}.runTaskTimer(Main.getInstance(), 20L, 20L);
 	}
 	
-	@SuppressWarnings("deprecation")
-	
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
 		
@@ -64,15 +62,29 @@ public class CommandMute implements CommandExecutor {
 			if (args.length == 0)
 				sender.sendMessage("§7[§aMute§7]§c /mute <player> <länge>");
 			else if (args.length == 2) {
-				Player playerToMute = Main.getInstance().getServer().getPlayer(args[0]);
+				final Player playerToMute = Main.getInstance().getServer().getPlayer(args[0]);
 				
-				try {
-					Date date = new Date(MUTE_PARSE_FORMAT_2.parse(args[1]).getTime() + Calendar.getInstance().getTime().getTime());
-					date = Date.from(date.toInstant().plusSeconds(3600));
+				if (playerToMute != null) {
+					try {
+						Date date = new Date(MUTE_PARSE_FORMAT_2.parse(args[1]).getTime() + Calendar.getInstance().getTime().getTime());
+						date = Date.from(date.toInstant().plusSeconds(3600));
+						
+						mutePlayer(playerToMute, date);
+					} catch (ParseException e) {
+						sender.sendMessage("§7[§aMute§7]§c " + e.getMessage());
+					}
+				} else {
+					@SuppressWarnings("deprecation")
+					final OfflinePlayer player = Main.getInstance().getServer().getOfflinePlayer(args[0]);
 					
-					mutePlayer(playerToMute, date);
-				} catch (ParseException e) {
-					sender.sendMessage("§7[§aMute§7]§c " + e.getMessage());
+					try {
+						Date date = new Date(MUTE_PARSE_FORMAT_2.parse(args[1]).getTime() + Calendar.getInstance().getTime().getTime());
+						date = Date.from(date.toInstant().plusSeconds(3600));
+						
+						mutePlayer(player.getUniqueId(), date);
+					} catch (ParseException e) {
+						sender.sendMessage("§7[§aMute§7]§c " + e.getMessage());
+					}
 				}
 			} else if (args.length == 1) {
 				Player playerToMute = Main.getInstance().getServer().getPlayer(args[0]);
@@ -86,10 +98,11 @@ public class CommandMute implements CommandExecutor {
 						sender.sendMessage("§7[§aMute§7]§c Der Spieler " + args[0] + " ist jetzt gemuted.");
 					}
 				} else {
-					OfflinePlayer player = Main.getInstance().getServer().getOfflinePlayer(args[0]);
+					@SuppressWarnings("deprecation")
+					final OfflinePlayer player = Main.getInstance().getServer().getOfflinePlayer(args[0]);
 					
 					if (player != null) {
-						UUID uuid = player.getUniqueId();
+						final UUID uuid = player.getUniqueId();
 						
 						if (isPlayerMuted(uuid)) {
 							unmutePlayer(uuid);

@@ -48,7 +48,10 @@ public class LanguageManager {
 		APPLE_ONE("apple.one"),
 		APPLE_MORE("apple.more"),
 
-		PING_INFO("ping.info");
+		PING_INFO("ping.info"),
+		
+		SPAWN_INFO("spawn.info"),
+		SPAWN_SET("spawn.set");
 
 		String dict;
 		
