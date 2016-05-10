@@ -8,6 +8,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import de.flaflo.language.LanguageManager.Dictionary;
 import de.flaflo.main.Main;
 import net.minecraft.server.v1_8_R2.ChunkCoordIntPair;
 import net.minecraft.server.v1_8_R2.EntityHuman;
@@ -28,20 +29,19 @@ public class UPlayer {
 	 */
 	public static void sendChunkUpdates() {
 		int xDiff, yDiff;
-		int viewDistance = Bukkit.getServer().getViewDistance() << 4;
+		final int viewDistance = Bukkit.getServer().getViewDistance() << 4;
 		
-		for (Chunk chunk : Bukkit.getWorlds().get(0).getLoadedChunks()) {
-			World world = ((org.bukkit.craftbukkit.v1_8_R2.CraftChunk) chunk).getHandle().world;
+		for (final Chunk chunk : Bukkit.getWorlds().get(0).getLoadedChunks()) {
+			final World world = ((org.bukkit.craftbukkit.v1_8_R2.CraftChunk) chunk).getHandle().world;
 			
-		    for (EntityHuman eh : world.players) {
-		    	if (eh instanceof EntityPlayer) {
-			        xDiff = Math.abs((int) eh.locX - chunk.getX() << 4);
-			        yDiff = Math.abs((int) eh.locZ - chunk.getZ() << 4);
+		    for (final EntityHuman eh : world.players)
+				if (eh instanceof EntityPlayer) {
+			        xDiff = Math.abs(((int) eh.locX - chunk.getX()) << 4);
+			        yDiff = Math.abs(((int) eh.locZ - chunk.getZ()) << 4);
 			        
-			        if (xDiff <= viewDistance && yDiff <= viewDistance)
+			        if ((xDiff <= viewDistance) && (yDiff <= viewDistance))
 			            ((EntityPlayer) eh).chunkCoordIntPairQueue.add(new ChunkCoordIntPair(chunk.getX(), chunk.getZ()));
 		    	}
-		    }
 		}
 	}
 	
@@ -52,7 +52,7 @@ public class UPlayer {
 	 * @param loc
 	 * @param delay
 	 */
-	public static void teleport(Player p, Location loc, long delay) {
+	public static void teleport(final Player p, final Location loc, final long delay) {
 		TELEPORTING_PLAYERS.add(p);
 		
 		new Delay() {
@@ -74,7 +74,7 @@ public class UPlayer {
 	 * @param p2 Spieler 2
 	 * @param delay Verzögerung
 	 */
-	public static void teleport(Player p1, Player p2, long delay) {
+	public static void teleport(final Player p1, final Player p2, final long delay) {
 		TELEPORTING_PLAYERS.add(p1);
 		
 		new Delay() {
@@ -94,8 +94,8 @@ public class UPlayer {
 	 * @param p
 	 * @param delayed
 	 */
-	public static void spawn(Player p, boolean delayed) {
-		p.sendMessage("§7[§aSpawn§7]§r Teleportiere zum Spawn...");
+	public static void spawn(final Player p, final boolean delayed) {
+		Main.getInstance().sendMessageLang(p, "Spawn", Dictionary.SPAWN_INFO);
 		
 		teleport(p, Main.getInstance().getSettings().getSpawn(), delayed ? 2L: 0L);
 	}
@@ -105,8 +105,8 @@ public class UPlayer {
 	 * @param uuid UUID des gesuchten Spielers
 	 * @return Den gesuchten Spieler
 	 */
-	public static Player getPlayerByUUID(UUID uuid) {
-		for (Player player : Main.getInstance().getServer().getOnlinePlayers())
+	public static Player getPlayerByUUID(final UUID uuid) {
+		for (final Player player : Main.getInstance().getServer().getOnlinePlayers())
 			if (player.getUniqueId().equals(uuid))
 				return player;
 		

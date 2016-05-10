@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import de.flaflo.language.LanguageManager.Dictionary;
 import de.flaflo.main.Main;
 import de.flaflo.util.UMisc;
 import de.flaflo.util.UPlayer;
@@ -36,7 +37,7 @@ public class CommandMute implements CommandExecutor {
 
 			@Override
 			public void run() {
-				for (Date date : MUTED_PLAYERS.values()) {
+				for (final Date date : MUTED_PLAYERS.values()) {
 					if (date.equals(DATE_INFINITY))
 						continue;
 					
@@ -56,7 +57,7 @@ public class CommandMute implements CommandExecutor {
 	}
 	
 	@Override
-	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
+	public boolean onCommand(final CommandSender sender, final Command arg1, final String arg2, final String[] args) {
 		
 		if (sender.isOp() || sender.hasPermission("player.mute")) {
 			if (args.length == 0)
@@ -64,16 +65,16 @@ public class CommandMute implements CommandExecutor {
 			else if (args.length == 2) {
 				final Player playerToMute = Main.getInstance().getServer().getPlayer(args[0]);
 				
-				if (playerToMute != null) {
+				if (playerToMute != null)
 					try {
 						Date date = new Date(MUTE_PARSE_FORMAT_2.parse(args[1]).getTime() + Calendar.getInstance().getTime().getTime());
 						date = Date.from(date.toInstant().plusSeconds(3600));
 						
 						mutePlayer(playerToMute, date);
-					} catch (ParseException e) {
+					} catch (final ParseException e) {
 						sender.sendMessage("§7[§aMute§7]§c " + e.getMessage());
 					}
-				} else {
+				else {
 					@SuppressWarnings("deprecation")
 					final OfflinePlayer player = Main.getInstance().getServer().getOfflinePlayer(args[0]);
 					
@@ -82,12 +83,12 @@ public class CommandMute implements CommandExecutor {
 						date = Date.from(date.toInstant().plusSeconds(3600));
 						
 						mutePlayer(player.getUniqueId(), date);
-					} catch (ParseException e) {
+					} catch (final ParseException e) {
 						sender.sendMessage("§7[§aMute§7]§c " + e.getMessage());
 					}
 				}
 			} else if (args.length == 1) {
-				Player playerToMute = Main.getInstance().getServer().getPlayer(args[0]);
+				final Player playerToMute = Main.getInstance().getServer().getPlayer(args[0]);
 				
 				if (playerToMute != null) {
 					if (isPlayerMuted(playerToMute)) {
@@ -115,9 +116,9 @@ public class CommandMute implements CommandExecutor {
 						sender.sendMessage("§7[§aMute§7]§c Der Spieler " + args[0] + " konnte nicht gefunden werden.");
 				}
 			} else 
-				sender.sendMessage("§7[§aMute§7]§c /mute <player> <länge>");
+				sender.sendMessage("§7[§aMute§7]§c /mute <player> <length>");
 		} else
-			sender.sendMessage("§7[§aMute§7]§c Du besitzt nicht genügend Rechte!");
+			Main.getInstance().sendMessageLang((Player) sender, "Mute", Dictionary.ADMIN_RESTRICTED);
 		
 		return false;
 	}
@@ -127,7 +128,7 @@ public class CommandMute implements CommandExecutor {
 	 * @param player Spieler der gemuted wird
 	 * @param date Zeitpunkt, an dem der Spieler wieder entmuted wird
 	 */
-	public static void mutePlayer(Player player, Date date) {
+	public static void mutePlayer(final Player player, final Date date) {
 		MUTED_PLAYERS.put(player.getUniqueId(), date);
 		
 		player.sendMessage("§7[§aMute§7]§c§l Du wurdest gemuted!");
@@ -138,7 +139,7 @@ public class CommandMute implements CommandExecutor {
 	 * @param player Spieler der gemuted wird
 	 * @param date Zeitpunkt, an dem der Spieler wieder entmuted wird
 	 */
-	public static void mutePlayer(UUID player, Date date) {
+	public static void mutePlayer(final UUID player, final Date date) {
 		MUTED_PLAYERS.put(player, date);
 	}
 	
@@ -146,7 +147,7 @@ public class CommandMute implements CommandExecutor {
 	 * Entmuted einen Spieler
 	 * @param player Spieler der entmuted wird
 	 */
-	public static void unmutePlayer(Player player) {
+	public static void unmutePlayer(final Player player) {
 		MUTED_PLAYERS.remove(player.getUniqueId());
 		
 		player.sendMessage("§7[§aMute§7]§a Deine Mutezeit ist abgelaufen.");
@@ -156,7 +157,7 @@ public class CommandMute implements CommandExecutor {
 	 * Entmuted einen Spieler
 	 * @param player Spieler der entmuted wird
 	 */
-	public static void unmutePlayer(UUID player) {
+	public static void unmutePlayer(final UUID player) {
 		MUTED_PLAYERS.remove(player);
 	}
 	
@@ -165,7 +166,7 @@ public class CommandMute implements CommandExecutor {
 	 * @param player Der gemutete Spieler
 	 * @return Datum bis zum Entmutezeitpunkt
 	 */
-	public static Date playerMutedUntil(Player player) {
+	public static Date playerMutedUntil(final Player player) {
 		return MUTED_PLAYERS.get(player.getUniqueId());
 	}
 	
@@ -174,7 +175,7 @@ public class CommandMute implements CommandExecutor {
 	 * @param player Der gemutete Spieler
 	 * @return Datum bis zum Entmutezeitpunkt
 	 */
-	public static Date playerMutedUntil(UUID player) {
+	public static Date playerMutedUntil(final UUID player) {
 		return MUTED_PLAYERS.get(player);
 	}
 	
@@ -183,7 +184,7 @@ public class CommandMute implements CommandExecutor {
 	 * @param player Spieler der gechecked wird
 	 * @return Ist der Spieler gemuted
 	 */
-	public static boolean isPlayerMuted(Player player) {
+	public static boolean isPlayerMuted(final Player player) {
 		return MUTED_PLAYERS.containsKey(player.getUniqueId());
 	}
 	
@@ -192,7 +193,7 @@ public class CommandMute implements CommandExecutor {
 	 * @param player Spieler der gechecked wird
 	 * @return Ist der Spieler gemuted
 	 */
-	public static boolean isPlayerMuted(UUID player) {
+	public static boolean isPlayerMuted(final UUID player) {
 		return MUTED_PLAYERS.containsKey(player);
 	}
 }

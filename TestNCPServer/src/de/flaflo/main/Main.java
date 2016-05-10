@@ -16,6 +16,7 @@ import de.flaflo.command.CommandFreebuild;
 import de.flaflo.command.CommandHeal;
 import de.flaflo.command.CommandHunger;
 import de.flaflo.command.CommandItem;
+import de.flaflo.command.CommandLang;
 import de.flaflo.command.CommandMute;
 import de.flaflo.command.CommandOPApple;
 import de.flaflo.command.CommandPing;
@@ -23,6 +24,9 @@ import de.flaflo.command.CommandSpawn;
 import de.flaflo.command.CommandTPA;
 import de.flaflo.command.CommandWarp;
 import de.flaflo.command.CommandWhois;
+import de.flaflo.language.ArgumentPair;
+import de.flaflo.language.LanguageManager;
+import de.flaflo.language.LanguageManager.Dictionary;
 import de.flaflo.listener.MainListener;
 import de.flaflo.settings.Settings;
 import de.flaflo.util.UMisc;
@@ -61,8 +65,11 @@ public class Main extends JavaPlugin {
 
 			@Override
 			public void run() {
-				for (Player p : Main.this.getServer().getOnlinePlayers())
+				for (final Player p : Main.this.getServer().getOnlinePlayers()) {
 					p.chat("/testncp input " + p.getName());
+				
+					LanguageManager.getInstance().setCurrentLang(p, LanguageManager.getInstance().getLanguages()[0]);
+				}
 			}
 
 		}.runTaskLater(this, 20L);
@@ -87,7 +94,7 @@ public class Main extends JavaPlugin {
 
 			@Override
 			public void run() {
-				Main.this.getServer().broadcastMessage("§7[§aClearLag§7]§r §e10§r Sekunden bevor alle Items auf dem Boden entfernt werden.");
+				Main.getInstance().broadcastMessageLang("Items", Dictionary.CLEAR_LAG_WARN, new ArgumentPair("secs", "10"));
 
 				new BukkitRunnable() {
 
@@ -110,7 +117,7 @@ public class Main extends JavaPlugin {
 
 			@Override
 			public void run() {
-				Main.this.getServer().broadcastMessage("§7[§aFreebuild§7]§r §e60§r Sekunden bevor der Freebuild zurückgesetzt wird.");
+				Main.getInstance().broadcastMessageLang("Freebuild", Dictionary.CLEAR_LAG_WARN, new ArgumentPair("secs", "60"));
 
 				new BukkitRunnable() {
 
@@ -152,8 +159,43 @@ public class Main extends JavaPlugin {
 		this.getCommand("freebuild").setExecutor(new CommandFreebuild());
 		this.getCommand("mute").setExecutor(new CommandMute());
 		this.getCommand("whois").setExecutor(new CommandWhois());
+		this.getCommand("lang").setExecutor(new CommandLang());
+	}
+	
+	/**
+	 * Sendet eine Nachricht an einen Spieler
+	 * @param player der Spieler
+	 * @param prefix der Prefix
+	 * @param dict die Dictionary
+	 * @param pairs die Argumentenpaare
+	 */
+	public synchronized void sendMessageLang(final Player player, final String prefix, final Dictionary dict, final ArgumentPair... pairs) {
+		String msg = "§7[§a" + prefix + "§7]§r " + LanguageManager.getInstance().getCurrentLang(player).getString(dict);
+		
+		for (final ArgumentPair pair : pairs)
+			msg = msg.replace("%" + pair.getKey() +  "%", pair.getValue());
+		
+		player.sendMessage(msg);
+	}
+	
+	/**
+	 * Sendet eine Nachricht an einen Spieler
+	 * @param player der Spieler
+	 * @param prefix der Prefix
+	 * @param dict die Dictionary
+	 */
+	public synchronized void sendMessageLang(final Player player, final String prefix, final Dictionary dict) {
+		player.sendMessage("§7[§a" + prefix + "§7]§r " + LanguageManager.getInstance().getCurrentLang(player).getString(dict));
 	}
 
+	public synchronized void broadcastMessageLang(final String prefix, final Dictionary dict, final ArgumentPair... pairs) {
+		Main.getInstance().getServer().getOnlinePlayers().forEach(pl -> sendMessageLang(pl, prefix, dict, pairs));
+	}
+	
+	public synchronized void broadcastMessageLang(final String prefix, final Dictionary dict) {
+		Main.getInstance().getServer().getOnlinePlayers().forEach(pl -> sendMessageLang(pl, prefix, dict));
+	}
+	
 	/**
 	 * Gibt die Momentane Instanz zurück
 	 * 
@@ -169,9 +211,9 @@ public class Main extends JavaPlugin {
 	 * @return das WorldGuard Plugin
 	 */
 	public WorldGuardPlugin getWorldGuard() {
-		Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
+		final Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
 
-		if (plugin == null || !(plugin instanceof WorldGuardPlugin))
+		if ((plugin == null) || !(plugin instanceof WorldGuardPlugin))
 			return null;
 
 		return (WorldGuardPlugin) plugin;

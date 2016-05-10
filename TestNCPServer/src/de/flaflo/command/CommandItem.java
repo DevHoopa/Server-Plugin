@@ -14,6 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import de.flaflo.language.ArgumentPair;
+import de.flaflo.language.LanguageManager.Dictionary;
+import de.flaflo.main.Main;
+
 /**
  * Zuständig für den Blocks Befehl
  * 
@@ -53,7 +57,7 @@ public class CommandItem implements CommandExecutor {
 		final ItemStack axeDummy = new ItemStack(Material.DIAMOND_PICKAXE);
 		final ItemStack shovelDummy = new ItemStack(Material.DIAMOND_SPADE);
 
-		for (Enchantment ench : Enchantment.values()) {
+		for (final Enchantment ench : Enchantment.values()) {
 			if (ench.canEnchantItem(axeDummy))
 				SUPER_AXE_ECHANTMENTS.put(ench, ench.getMaxLevel());
 			if (ench.canEnchantItem(shovelDummy))
@@ -61,82 +65,79 @@ public class CommandItem implements CommandExecutor {
 		}
 	}
 
+	@Override
 	@SuppressWarnings("deprecation")
-	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
-		Player p = (Player) arg0;
+	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+		final Player p = (Player) arg0;
 
 		int amount = 1;
 
-		if (args.length == 2) {
+		if (args.length == 2)
 			try {
 				Material material = null;
 
 				try {
 					material = Material.getMaterial(Integer.parseInt(args[0]));
-				} catch (NumberFormatException ex) {
+				} catch (final NumberFormatException ex) {
 					material = Material.getMaterial(args[0].toUpperCase());
 				}
 
 				if (material == null)
-					p.sendMessage("§7[§aItem§7]§r §cDieses Item konnte nicht gefunden werden.");
-				else {
-					if (!RESTRICTED_MATERIALS.contains(material)) {
-						amount = Integer.parseInt(args[1]);
-	
-						p.getInventory().addItem(new ItemStack(material, amount));
-	
-						p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name().replace("_", " ")) + "§r erhalten.");
-					} else
-						p.sendMessage("§7[§aItem§7]§c Dieses Item ist verboten!");
-				}
-			} catch (NumberFormatException ex) {
-				p.sendMessage("§7[§aItem§7]§r §cDu musst eine Zahl angeben.");
+					Main.getInstance().sendMessageLang(p, "Item", Dictionary.ITEM_INVALID);
+				else if (!RESTRICTED_MATERIALS.contains(material)) {
+					amount = Integer.parseInt(args[1]);
+
+					p.getInventory().addItem(new ItemStack(material, amount));
+
+					Main.getInstance().sendMessageLang(p, "Item", Dictionary.ITEM_SUCCESS, new ArgumentPair("amount", "§e" + amount), new ArgumentPair("item", "§7" + WordUtils.capitalizeFully(material.name().replace("_", " "))));
+				} else
+					Main.getInstance().sendMessageLang(p, "Item", Dictionary.ITEM_RESTRICTED);
+			} catch (final NumberFormatException ex) {
+				Main.getInstance().sendMessageLang(p, "Item", Dictionary.ITEM_FORMAT);
 			}
-		} else if (args.length == 1) {
+		else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("superaxe")) {
-				ItemStack superAxe = new ItemStack(Material.DIAMOND_PICKAXE);
-				ItemMeta axeMeta = superAxe.getItemMeta();
-				axeMeta.setDisplayName("§b§lSuper Spitzhacke");
+				final ItemStack superAxe = new ItemStack(Material.DIAMOND_PICKAXE);
+				final ItemMeta axeMeta = superAxe.getItemMeta();
+				axeMeta.setDisplayName("§b§lSuper Pickaxe");
 				superAxe.setItemMeta(axeMeta);
 
 				superAxe.addEnchantments(SUPER_AXE_ECHANTMENTS);
 
 				p.getInventory().addItem(superAxe);
-				p.sendMessage("§7[§aItem§7]§r §aDiese Spitzhacke bewirkt Wunder!");
+				Main.getInstance().sendMessageLang(p, "Item", Dictionary.ITEM_SUPERAXE);
 			} else if (args[0].equalsIgnoreCase("supershovel")) {
-				ItemStack superShovel = new ItemStack(Material.DIAMOND_SPADE);
+				final ItemStack superShovel = new ItemStack(Material.DIAMOND_SPADE);
 
-				ItemMeta shovelMeta = superShovel.getItemMeta();
-				shovelMeta.setDisplayName("§b§lSuper Schaufel");
+				final ItemMeta shovelMeta = superShovel.getItemMeta();
+				shovelMeta.setDisplayName("§b§lSuper Shovel");
 				superShovel.setItemMeta(shovelMeta);
 
 				superShovel.addEnchantments(SUPER_SHOVEL_ECHANTMENTS);
 
 				p.getInventory().addItem(superShovel);
-				p.sendMessage("§7[§aItem§7]§r §aDiese Schaufel bewirkt Wunder!");
+				Main.getInstance().sendMessageLang(p, "Item", Dictionary.ITEM_SUPERSPADE);
 			} else {
 				Material material = null;
 
 				try {
 					material = Material.getMaterial(Integer.parseInt(args[0]));
-				} catch (NumberFormatException ex) {
+				} catch (final NumberFormatException ex) {
 					material = Material.getMaterial(args[0].toUpperCase());
 				}
 
 				if (material == null)
-					p.sendMessage("§7[§aItem§7]§r §cDieses Item konnte nicht gefunden werden.");
-				else {
-					if (!RESTRICTED_MATERIALS.contains(material)) {
-						p.getInventory().addItem(new ItemStack(material, amount));
+					Main.getInstance().sendMessageLang(p, "Item", Dictionary.ITEM_INVALID);
+				else if (!RESTRICTED_MATERIALS.contains(material)) {
+					p.getInventory().addItem(new ItemStack(material, amount));
 
-						p.sendMessage("§7[§aItem§7]§r Du hast §7" + amount + " " + WordUtils.capitalizeFully(material.name().replace("_", " ")) + "§r erhalten.");
-					} else
-						p.sendMessage("§7[§aItem§7]§c Dieses Item ist verboten.");
-				}
+					Main.getInstance().sendMessageLang(p, "Item", Dictionary.ITEM_SUCCESS, new ArgumentPair("amount", "§e" + amount), new ArgumentPair("item", "§7" + WordUtils.capitalizeFully(material.name().replace("_", " "))));
+				} else
+					Main.getInstance().sendMessageLang(p, "Item", Dictionary.ITEM_RESTRICTED);
 			}
 		} else {
 			p.sendMessage("§7[§aItem§7]§c /item <id/name>");
-			p.sendMessage("§7[§aItem§7]§c /item <id/name> <anzahl>");
+			p.sendMessage("§7[§aItem§7]§c /item <id/name> <amount>");
 		}
 
 		return false;

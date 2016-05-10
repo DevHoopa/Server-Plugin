@@ -8,6 +8,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.flaflo.language.ArgumentPair;
+import de.flaflo.language.LanguageManager.Dictionary;
 import de.flaflo.main.Main;
 import de.flaflo.util.UMisc;
 import de.flaflo.util.UPlayer;
@@ -22,52 +24,50 @@ public class CommandTPA implements CommandExecutor {
 
 	private static final HashMap<UUID, UUID> requestQueue = new HashMap<UUID, UUID>();
 	
-	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
-		Player p = (Player) arg0;
-		UUID pId = p.getUniqueId();
+	@Override
+	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+		final Player p = (Player) arg0;
+		final UUID pId = p.getUniqueId();
 		
 		if (args.length == 0) {
-			p.sendMessage("§7[§aTPA§7]§r Um eine Anfrage zu senden mache /tpa <name>.");
-			p.sendMessage("§7[§aTPA§7]§r Um eine Anfrage anzunehmen mache /tpa accept.");
+			Main.getInstance().sendMessageLang(p, "TPA", Dictionary.TPA_INFO1);
+			Main.getInstance().sendMessageLang(p, "TPA", Dictionary.TPA_INFO2);
 		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("accept")) {
 				
 				if (requestQueue.containsValue(pId)) {
-					UUID tpId = UMisc.getKeyByValue(requestQueue, pId);
-					Player tp = Main.getInstance().getServer().getPlayer(tpId);
+					final UUID tpId = UMisc.getKeyByValue(requestQueue, pId);
+					final Player tp = Main.getInstance().getServer().getPlayer(tpId);
 					
-					if (tp != null && tp.isOnline()) {
+					if ((tp != null) && tp.isOnline()) {
 						requestQueue.remove(pId);
-						
-						tp.sendMessage("§7[§aTPA§7]§r Teleportiere zu " + p.getName() + "...");
+						Main.getInstance().sendMessageLang(p, "TPA", Dictionary.TPA_SUCCESS, new ArgumentPair("player", p.getName()));
 
 						UPlayer.teleport(tp, p, 2L);
 					} else
-						p.sendMessage("§7[§aTPA§7]§r §cDieser Spieler ist nicht online.");
+						Main.getInstance().sendMessageLang(p, "TPA", Dictionary.PLAYER_NOT_FOUND);
 				} else
-					p.sendMessage("§7[§aTPA§7]§r Du hast keine Anfrage, die du akzeptieren könntest.");
+					Main.getInstance().sendMessageLang(p, "TPA", Dictionary.TPA_NO_REQUESTS);
 				
 				return false;
 			}
 			
-			Player to = Main.getInstance().getServer().getPlayer(args[0]);
-			UUID toId = Main.getInstance().getServer().getPlayer(args[0]).getUniqueId();
+			final Player to = Main.getInstance().getServer().getPlayer(args[0]);
+			final UUID toId = Main.getInstance().getServer().getPlayer(args[0]).getUniqueId();
 			
-			if (to != null && to.isOnline()) {
+			if ((to != null) && to.isOnline()) {
 				if (to.equals(p)) {
-					p.sendMessage("§7[§aTPA§7]§r §cDu kannst dich nicht zu dir selbst teleportieren!");
-					
+					Main.getInstance().sendMessageLang(p, "TPA", Dictionary.TPA_ERROR);
 					return false;
 				}
 
 				requestQueue.put(pId, toId);
 				
-				p.sendMessage("§7[§aTPA§7]§r §aAnfrage gesendet.");
-
-				to.sendMessage("§7[§aTPA§7]§r §a" + p.getName() + " möchte sich zu dir teleportieren.");
-				to.sendMessage("§7[§aTPA§7]§r Mache /tpa accept um die Anfrage zu akzeptieren.");
+				Main.getInstance().sendMessageLang(p, "TPA", Dictionary.TPA_SENT);
+				Main.getInstance().sendMessageLang(to, "TPA", Dictionary.TPA_INFO3, new ArgumentPair("player", p.getName()));
+				Main.getInstance().sendMessageLang(to, "TPA", Dictionary.TPA_INFO4);
 			} else
-				p.sendMessage("§7[§aTPA§7]§r §cDieser Spieler ist nicht online.");
+				Main.getInstance().sendMessageLang(p, "TPA", Dictionary.PLAYER_NOT_FOUND);
 		}
 		
 		return false;

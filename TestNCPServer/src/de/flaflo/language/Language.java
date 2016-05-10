@@ -6,8 +6,8 @@ import de.flaflo.language.LanguageManager.Dictionary;
 
 public abstract class Language {
 
-	private String language;
-	private HashMap<String, String> dict;
+	private final String language;
+	private final HashMap<String, String> dict;
 	
 	public Language(String lang) {
 		language = lang;
@@ -26,11 +26,11 @@ public abstract class Language {
 		return this.dict.get(dict.toString());
 	}
 	
-	public void addString(String dict, String str) {
+	protected void addString(String dict, String str) {
 		this.dict.put(dict, str);
 	}
 	
-	public void addString(Dictionary dict, String str) {
+	protected void addString(Dictionary dict, String str) {
 		this.dict.put(dict.toString(), str);
 	}
 	

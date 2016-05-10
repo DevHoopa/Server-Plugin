@@ -8,6 +8,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.flaflo.language.LanguageManager.Dictionary;
+import de.flaflo.main.Main;
+
 /**
  * Zuständig für den Hunger Befehl
  * 
@@ -18,18 +21,19 @@ public class CommandHunger implements CommandExecutor {
 
 	private static ArrayList<UUID> playersBlockedHunger = new ArrayList<UUID>();
 	
-	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
+	@Override
+	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
 		if (args.length == 0) {
-			Player p = (Player) arg0;
+			final Player p = (Player) arg0;
 
 			if (!playersBlockedHunger.contains(p.getUniqueId())) {
 				playersBlockedHunger.add(p.getUniqueId());
 				
-				p.sendMessage("§7[§aHunger§7]§r Du erlaubst Hunger nicht mehr.");
+				Main.getInstance().sendMessageLang(p, "Hunger", Dictionary.HUNGER_OFF);
 			} else {
 				playersBlockedHunger.remove(p.getUniqueId());
 				
-				p.sendMessage("§7[§aHunger§7]§r Du erlaubst nun Hunger.");
+				Main.getInstance().sendMessageLang(p, "Hunger", Dictionary.HUNGER_ON);
 			}
 		}
 		

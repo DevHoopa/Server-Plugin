@@ -6,6 +6,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import de.flaflo.language.ArgumentPair;
+import de.flaflo.language.LanguageManager.Dictionary;
+import de.flaflo.main.Main;
 import net.minecraft.server.v1_8_R2.EntityPlayer;
 
 /**
@@ -16,20 +19,21 @@ import net.minecraft.server.v1_8_R2.EntityPlayer;
  */
 public class CommandPing implements CommandExecutor {
 
-	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
+	@Override
+	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
 		if (args.length == 0) {
-			Player p = (Player) arg0;
+			final Player p = (Player) arg0;
 
 			int ping = 0;
 
 			if (p != null) {
-				CraftPlayer cp = (CraftPlayer) p;
-				EntityPlayer ep = cp.getHandle();
+				final CraftPlayer cp = (CraftPlayer) p;
+				final EntityPlayer ep = cp.getHandle();
 				
 				ping = ep.ping;
 			}
 			
-			p.sendMessage("§7[§aPing§7]§r Dein Ping ist: " + ping);
+			Main.getInstance().sendMessageLang(p, "Ping", Dictionary.PING_INFO, new ArgumentPair("ping", String.valueOf(ping)));
 		}
 		
 		return false;

@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.flaflo.language.LanguageManager.Dictionary;
 import de.flaflo.main.Main;
 import de.flaflo.util.UPlayer;
 
@@ -16,23 +17,24 @@ import de.flaflo.util.UPlayer;
  */
 public class CommandSpawn implements CommandExecutor {
 
-	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] args) {
+	@Override
+	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
 		if (args.length == 0) {
-			Player p = (Player) arg0;
+			final Player p = (Player) arg0;
 
 			if (UPlayer.TELEPORTING_PLAYERS.contains(p))
 				return false;
 			
 			UPlayer.spawn(p, true);
 		} else if (args.length == 1) {
-			Player p = (Player) arg0;
+			final Player p = (Player) arg0;
 
 			if (args[0].equalsIgnoreCase("set") && (p.isOp() || p.hasPermission("server.spawn.set"))) {
 				Main.getInstance().getSettings().setSpawn(p.getLocation());
 
 				p.sendMessage("§7[§aSpawn§7]§r Spawn gesetzt.");
 			} else
-				p.sendMessage("§7[§aConsole§7]§r §cDu besitzt nicht genügend Rechte!");
+				Main.getInstance().sendMessageLang(p, "Spawn", Dictionary.ADMIN_RESTRICTED);
 		}
 
 		return false;

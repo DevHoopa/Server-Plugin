@@ -17,6 +17,7 @@ import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import com.sk89q.worldedit.regions.Region;
 
+import de.flaflo.language.LanguageManager.Dictionary;
 import de.flaflo.main.Main;
 
 /**
@@ -34,8 +35,8 @@ public class UMisc {
 	 * @param value
 	 * @return
 	 */
-	public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
-	    for (Entry<T, E> entry : map.entrySet())
+	public static <T, E> T getKeyByValue(final Map<T, E> map, final E value) {
+	    for (final Entry<T, E> entry : map.entrySet())
 	        if (Objects.equals(value, entry.getValue()))
 	            return entry.getKey();
 	    
@@ -49,13 +50,11 @@ public class UMisc {
 	 * Setzt den Freebuild
 	 */
 	public static void resetFreebuild() {
-		Main.getInstance().getServer().broadcastMessage("§7[§aFreebuild§7]§r Setze den Freebuild zurück...");
-
-		Iterator<BlockVector> freeBuildBlocks = FREEBUILD_REGION.iterator();
+		final Iterator<BlockVector> freeBuildBlocks = FREEBUILD_REGION.iterator();
 
 		while (freeBuildBlocks.hasNext()) {
-			BlockVector vec = freeBuildBlocks.next();
-			Block block = FREEBUILD_SELECTION.getWorld().getBlockAt(new Location(FREEBUILD_SELECTION.getWorld(), vec.getBlockX(), vec.getBlockY(), vec.getBlockZ()));
+			final BlockVector vec = freeBuildBlocks.next();
+			final Block block = FREEBUILD_SELECTION.getWorld().getBlockAt(new Location(FREEBUILD_SELECTION.getWorld(), vec.getBlockX(), vec.getBlockY(), vec.getBlockZ()));
 
 			if (vec.getBlockY() <= 0)
 				block.setType(Material.BEDROCK);
@@ -73,17 +72,17 @@ public class UMisc {
 	}
 	
 	public static void clearLag() {
-		Main.getInstance().getServer().broadcastMessage("§7[§aClearLag§7]§r Entferne alle Items auf dem Boden...");
-		
-		for (Entity e : Main.getInstance().getServer().getWorlds().get(0).getEntities())
+		for (final Entity e : Main.getInstance().getServer().getWorlds().get(0).getEntities())
 			if (e instanceof Item)
 				e.remove();
+
+		Main.getInstance().broadcastMessageLang("ClearLag", Dictionary.CLEAR_LAG_SUCCESS);
 	}
 	
 	private static Region createRegionFromCuboidSelection(final CuboidSelection sel) {
 		try {
 			return sel.getRegionSelector().getRegion();
-		} catch (IncompleteRegionException e) {
+		} catch (final IncompleteRegionException e) {
 			e.printStackTrace();
 
 			return null;
