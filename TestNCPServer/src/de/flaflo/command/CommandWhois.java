@@ -11,6 +11,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
+import de.flaflo.language.LanguageManager.Dictionary;
+import de.flaflo.main.Main;
+
 /**
  * Zuständig für den Damage Befehl
  * 
@@ -22,9 +25,10 @@ public class CommandWhois implements CommandExecutor {
 
 	}
 
-	public boolean onCommand(CommandSender cs, Command command, String label, String[] args) {
+	@Override
+	public boolean onCommand(final CommandSender cs, final Command command, final String label, final String[] args) {
+		final Player player = Bukkit.getServer().getPlayer(args[0]);
 		if (cs.isOp()) {
-			Player player = Bukkit.getServer().getPlayer(args[0]);
 			if (player != null) {
 				cs.sendMessage("§7################################################");
 				cs.sendMessage("§7[§aWhois§7]§c OP: " + player.isOp());
@@ -33,16 +37,16 @@ public class CommandWhois implements CommandExecutor {
 				cs.sendMessage("§7[§aWhois§7]§c First Played: " + new Date(player.getFirstPlayed()).toString());
 
 				String potionEffects = "";
-				Iterator<PotionEffect> iterator = player.getActivePotionEffects().iterator();
-				while (iterator.hasNext()) {
+				final Iterator<PotionEffect> iterator = player.getActivePotionEffects().iterator();
+				while (iterator.hasNext())
 					potionEffects += iterator.next().toString() + (iterator.hasNext() ? ", " : "");
-				}
 
 				cs.sendMessage("§7[§aWhois§7]§c PotionEffects: " + potionEffects);
 
 				cs.sendMessage("§7################################################");
 			} else {
 				@SuppressWarnings("deprecation")
+				final
 				OfflinePlayer ply = Bukkit.getOfflinePlayer(args[1]);
 
 				cs.sendMessage("§7################################################");
@@ -54,9 +58,8 @@ public class CommandWhois implements CommandExecutor {
 				cs.sendMessage("§7################################################");
 			}
 
-		} else {
-			cs.sendMessage("§7[§aWhois§7]§c Du besitzt nicht genügend Rechte!");
-		}
+		} else
+			Main.getInstance().broadcastMessageLang("Whois", Dictionary.ADMIN_RESTRICTED);
 
 		return true;
 	}
