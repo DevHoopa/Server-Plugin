@@ -146,7 +146,9 @@ public class MainListener implements Listener {
 				prefix = ChatColor.RED + "[Admin] " + ChatColor.RESET;
 			if (player.hasPermission("chat.dev"))
 				prefix = ChatColor.AQUA + "[Dev] " + ChatColor.RESET;
-
+			if (player.hasPermission("chat.donate"))
+				prefix = ChatColor.LIGHT_PURPLE + "[VIP] " + ChatColor.RESET;
+			
 			Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + prefix + player.getName()
 					+ ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
 		}
