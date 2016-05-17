@@ -30,8 +30,8 @@ import de.flaflo.util.UPlayer;
 import net.md_5.bungee.api.ChatColor;
 
 /**
- * Hauptklasse für alle Listener
- * (Ich hasse dich, Flaflo, warum nur EINE klasse?)
+ * Hauptklasse für alle Listener (Ich hasse dich, Flaflo, warum nur EINE
+ * klasse?)
  * 
  * @author Flaflo
  */
@@ -49,15 +49,15 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onItemConsume(final PlayerItemConsumeEvent e) {
-		if(e.getItem().getType() == Material.GOLDEN_APPLE) {
-			//DONT FUCKING EAT NOTCHIAN APPLES
-			if(e.getItem().getData().getData() == 1) {
+		if (e.getItem().getType() == Material.GOLDEN_APPLE) {
+			// DONT FUCKING EAT NOTCHIAN APPLES
+			if (e.getItem().getData().getData() == 1) {
 				e.getPlayer().setHealth(0);
 				e.getPlayer().getInventory().clear();
 			}
 		}
 	}
-	
+
 	@EventHandler
 	private void onFoodLevelChanged(final FoodLevelChangeEvent e) {
 		if (e.getEntity() instanceof Player)
@@ -67,7 +67,8 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	private void onCreatureSpawn(final CreatureSpawnEvent e) {
-		if (e.getEntityType().equals(EntityType.WITHER) || e.getEntityType().equals(EntityType.ARMOR_STAND) || e.getEntityType().equals(EntityType.IRON_GOLEM) || e.getEntityType().equals(EntityType.SNOWMAN))
+		if (e.getEntityType().equals(EntityType.WITHER) || e.getEntityType().equals(EntityType.ARMOR_STAND)
+				|| e.getEntityType().equals(EntityType.IRON_GOLEM) || e.getEntityType().equals(EntityType.SNOWMAN))
 			e.setCancelled(true);
 
 		if (e.getSpawnReason().equals(SpawnReason.NATURAL))
@@ -87,25 +88,26 @@ public class MainListener implements Listener {
 	@EventHandler
 	private void onDamageByEntity(final EntityDamageByEntityEvent e) {
 		if (e.getEntity() instanceof Player) {
-			if (!CommandDamage.getDamageablePlayers().contains(e.getEntity().getUniqueId()) || !CommandDamage.getDamageablePlayers().contains(e.getDamager().getUniqueId()))
+			if (!CommandDamage.getDamageablePlayers().contains(e.getEntity().getUniqueId())
+					|| !CommandDamage.getDamageablePlayers().contains(e.getDamager().getUniqueId()))
 				e.setCancelled(true);
-			
-			if((e.getCause() == DamageCause.ENTITY_ATTACK) || (e.getCause() == DamageCause.PROJECTILE)) {
-				if(e.getDamager() instanceof Player) {
+
+			if ((e.getCause() == DamageCause.ENTITY_ATTACK) || (e.getCause() == DamageCause.PROJECTILE)) {
+				if (e.getDamager() instanceof Player) {
 					final Player damager = (Player) e.getDamager();
-					
-					if(CommandFly.getPlayersallowedflying().contains(damager.getUniqueId())) {
+
+					if (CommandFly.getPlayersallowedflying().contains(damager.getUniqueId())) {
 						Main.getInstance().sendMessageLang(damager, "PvP", Dictionary.NO_FLY_PVP);
 						e.setCancelled(true);
 					}
-					
+
 				} else {
 					CommandHeal.getLastFightByPlayer().put((Player) e.getDamager(), System.currentTimeMillis());
 					CommandHeal.getLastFightByPlayer().put((Player) e.getEntity(), System.currentTimeMillis());
 				}
-				
+
 			}
-			
+
 		}
 	}
 
@@ -114,7 +116,8 @@ public class MainListener implements Listener {
 		e.getPlayer().chat("/testncp input " + e.getPlayer().getName());
 		if (LanguageManager.getInstance().getCurrentLang(e.getPlayer()) == null) {
 			e.getPlayer().sendMessage("§7[§aLanguage§7]§6 Welcome, to choose a language type /lang <en/de>");
-			LanguageManager.getInstance().setCurrentLang(e.getPlayer(), LanguageManager.getInstance().getLanguages()[0]);
+			LanguageManager.getInstance().setCurrentLang(e.getPlayer(),
+					LanguageManager.getInstance().getLanguages()[0]);
 		}
 		UPlayer.spawn(e.getPlayer(), false);
 	}
@@ -132,9 +135,21 @@ public class MainListener implements Listener {
 		e.setCancelled(true);
 
 		if (CommandMute.isPlayerMuted(player))
-			player.sendMessage("§7[§aMute§7]§c Du bist " + (CommandMute.playerMutedUntil(player) == CommandMute.DATE_INFINITY ? "PERMANENT" : "noch bis " + CommandMute.MUTE_PARSE_FORMAT_1.format(CommandMute.playerMutedUntil(player))) + " gemuted!");
-		else
-			Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + (player.isOp() || player.hasPermission("chat.admin") ? ChatColor.RED + "[Admin] " + ChatColor.RESET : ChatColor.GREEN + "[Tester] " + ChatColor.RESET) + player.getName() + ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
+			player.sendMessage("§7[§aMute§7]§c Du bist "
+					+ (CommandMute.playerMutedUntil(player) == CommandMute.DATE_INFINITY ? "PERMANENT"
+							: "noch bis "
+									+ CommandMute.MUTE_PARSE_FORMAT_1.format(CommandMute.playerMutedUntil(player)))
+					+ " gemuted!");
+		else {
+			String prefix = ChatColor.GREEN + "[Tester] " + ChatColor.RESET;
+			if (player.isOp() || player.hasPermission("chat.admin"))
+				prefix = ChatColor.RED + "[Admin] " + ChatColor.RESET;
+			if (player.hasPermission("chat.dev"))
+				prefix = ChatColor.AQUA + "[Dev] " + ChatColor.RESET;
+
+			Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + prefix + player.getName()
+					+ ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
+		}
 	}
 
 }
