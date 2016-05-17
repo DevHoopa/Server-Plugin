@@ -46,5 +46,10 @@ public class CommandFly implements CommandExecutor {
 		
 		return false;
 	}
+
+	public static ArrayList<UUID> getPlayersallowedflying() {
+		return playersAllowedFlying;
+	}
+	
 	
 }

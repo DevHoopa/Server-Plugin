@@ -71,7 +71,10 @@ public class LanguageManager {
 		WARP_INFO2("warp.info2"),
 		WARP_SUCCESS("warp.success"),
 		WARP_NOT_EXIST("warp.not.exist"),
-		WARP_SET("warp.set");
+		WARP_SET("warp.set"),
+		
+		NO_FLY_PVP("pvp.fly.deny"),
+		NO_HEAL_PVP("pvp.heal.deny");
 
 		final String dict;
 		
@@ -153,6 +156,9 @@ public class LanguageManager {
 					this.addString(Dictionary.WARP_SUCCESS, "Teleporting to %warp%...");
 					this.addString(Dictionary.WARP_NOT_EXIST, "The warp %warp% doesn't exist.");
 					this.addString(Dictionary.WARP_SET, "Warp %warp% set.");
+					
+					this.addString(Dictionary.NO_FLY_PVP, "You aren't allowed to fight while flying.");
+					this.addString(Dictionary.NO_HEAL_PVP, "You aren't allowed to heal while flying.");
 				}},
 			new Language("de") {
 				@Override
@@ -216,6 +222,9 @@ public class LanguageManager {
 					this.addString(Dictionary.WARP_SUCCESS, "Teleportiere zu %warp%...");
 					this.addString(Dictionary.WARP_NOT_EXIST, "Der Warp %warp% existiert nicht.");
 					this.addString(Dictionary.WARP_SET, "Warp %warp% gesetzt.");
+					
+					this.addString(Dictionary.NO_FLY_PVP, "Du darfst während dem Fliegen nicht kämpfen!");
+					this.addString(Dictionary.NO_HEAL_PVP, "Du kannst dich während dem Kämpfen nicht heilen!");
 				}
 		}};
 	
