@@ -37,6 +37,8 @@ import de.flaflo.util.UMisc;
  * @author Flaflo
  */
 public class Main extends JavaPlugin {
+	
+	public static final boolean NOCHEAT_PLUS = false;
 
 	private static Main main;
 	private Settings settings;

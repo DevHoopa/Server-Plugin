@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.flaflo.command.CommandAFK;
 import de.flaflo.command.CommandDamage;
@@ -127,14 +128,35 @@ public class MainListener implements Listener {
 
 		}
 	}
-
+	
 	@EventHandler
 	private void onJoin(final PlayerJoinEvent e) {
-		e.getPlayer().chat("/testncp input " + e.getPlayer().getName());
+		if (Main.NOCHEAT_PLUS)
+			e.getPlayer().chat("/testncp input " + e.getPlayer().getName());
 		if (LanguageManager.getInstance().getCurrentLang(e.getPlayer()) == null) {
 			e.getPlayer().sendMessage("§7[§aLanguage§7]§6 Welcome, to choose a language type /lang <en/de>");
 			LanguageManager.getInstance().setCurrentLang(e.getPlayer(), LanguageManager.getInstance().getLanguages()[0]);
 		}
+		
+		new BukkitRunnable() {
+
+			@Override
+			public void run() {
+				final Player player = e.getPlayer();
+				
+				String prefix = ChatColor.GREEN + "[Tester] " + ChatColor.RESET;
+				if (player.isOp() || player.hasPermission("chat.admin"))
+					prefix = ChatColor.RED + "[Admin] " + ChatColor.RESET;
+				else if (player.hasPermission("chat.dev"))
+					prefix = ChatColor.AQUA + "[Dev] " + ChatColor.RESET;
+				else if (player.hasPermission("chat.donate"))
+					prefix = ChatColor.LIGHT_PURPLE + "[VIP] " + ChatColor.RESET;
+				
+				player.setPlayerListName(prefix + player.getName());				
+			}
+			
+		}.runTaskLater(Main.getInstance(), 20);
+		
 		UPlayer.spawn(e.getPlayer(), false);
 	}
 
