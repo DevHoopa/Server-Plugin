@@ -68,7 +68,8 @@ public class Main extends JavaPlugin {
 			@Override
 			public void run() {
 				for (final Player p : Main.this.getServer().getOnlinePlayers()) {
-					p.chat("/testncp input " + p.getName());
+					if (NOCHEAT_PLUS)
+						p.chat("/testncp input " + p.getName());
 				
 					LanguageManager.getInstance().setCurrentLang(p, LanguageManager.getInstance().getLanguages()[0]);
 				}
