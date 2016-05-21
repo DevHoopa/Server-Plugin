@@ -78,9 +78,9 @@ public class Main extends JavaPlugin {
 
 			@Override
 			public void run() {
-				Main.this.getServer().broadcastMessage("§7[§c§lDonate§7]§r Du willst die Server weiterhin?");
-				Main.this.getServer().broadcastMessage("§7[§c§lDonate§7]§r Dann spende unter folgendem Link:");
-				Main.this.getServer().broadcastMessage("§7[§c§lDonate§7]§r http://goo.gl/G7D4iu");
+				Main.getInstance().broadcastMessageLang("Donate", Dictionary.DONATE1);
+				Main.getInstance().broadcastMessageLang("Donate", Dictionary.DONATE2);
+				Main.getInstance().broadcastMessageLang("Donate", Dictionary.DONATE3);
 			}
 
 		}.runTaskTimer(this, 0, (60 * 8) * 20);

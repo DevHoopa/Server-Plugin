@@ -43,7 +43,7 @@ public class UMisc {
 	    return null;
 	}
 	
-	private static final CuboidSelection FREEBUILD_SELECTION = new CuboidSelection(Bukkit.getServer().getWorlds().get(0), new Location(Bukkit.getWorlds().get(0), 780, 0, 150), new Location(Bukkit.getServer().getWorlds().get(0), 761, 255, 131));
+	private static final CuboidSelection FREEBUILD_SELECTION = new CuboidSelection(Bukkit.getServer().getWorlds().get(0), new Location(Bukkit.getWorlds().get(0), -775, 0, 1715), new Location(Bukkit.getServer().getWorlds().get(0), -791, 255, 1731));
 	private static final Region FREEBUILD_REGION = createRegionFromCuboidSelection(FREEBUILD_SELECTION);
 	
 	/**

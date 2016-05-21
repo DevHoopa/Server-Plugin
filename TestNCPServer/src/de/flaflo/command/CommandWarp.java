@@ -30,6 +30,11 @@ public class CommandWarp implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("create") && !p.isOp()) {
 				Main.getInstance().sendMessageLang(p, "Warp", Dictionary.ADMIN_RESTRICTED);
 				return false;
+			} else if (args[0].equalsIgnoreCase("remove")) {
+				if (args.length >= 2) {
+					Main.getInstance().getSettings().removeWarp(args[1]);
+					arg0.sendMessage("§7[§aWarp§7]§r Warp " + args[1] + " entfernt.");
+				}
 			} else if (args[0].equalsIgnoreCase("list")) {
 				final StringBuilder sb = new StringBuilder();
 				

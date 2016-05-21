@@ -11,7 +11,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -47,6 +49,7 @@ public class MainListener implements Listener {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	private void onItemConsume(final PlayerItemConsumeEvent e) {
 		if (e.getItem().getType() == Material.GOLDEN_APPLE) {
@@ -56,6 +59,20 @@ public class MainListener implements Listener {
 				e.getPlayer().getInventory().clear();
 			}
 		}
+	}
+
+	@EventHandler
+	private void onPlayerDeath(final PlayerDeathEvent e) {
+		e.setDeathMessage(null);
+		e.setKeepInventory(true);
+		e.setDroppedExp(0);
+	}
+
+	@EventHandler
+	private void onCommand(final PlayerCommandPreprocessEvent e) {
+		if (!e.getPlayer().isOp())
+			if (e.getMessage().contains("me") || e.getMessage().contains("plugins") || e.getMessage().contains("pl"))
+				e.setCancelled(true);
 	}
 
 	@EventHandler
@@ -116,8 +133,7 @@ public class MainListener implements Listener {
 		e.getPlayer().chat("/testncp input " + e.getPlayer().getName());
 		if (LanguageManager.getInstance().getCurrentLang(e.getPlayer()) == null) {
 			e.getPlayer().sendMessage("§7[§aLanguage§7]§6 Welcome, to choose a language type /lang <en/de>");
-			LanguageManager.getInstance().setCurrentLang(e.getPlayer(),
-					LanguageManager.getInstance().getLanguages()[0]);
+			LanguageManager.getInstance().setCurrentLang(e.getPlayer(), LanguageManager.getInstance().getLanguages()[0]);
 		}
 		UPlayer.spawn(e.getPlayer(), false);
 	}
@@ -148,7 +164,7 @@ public class MainListener implements Listener {
 				prefix = ChatColor.AQUA + "[Dev] " + ChatColor.RESET;
 			else if (player.hasPermission("chat.donate"))
 				prefix = ChatColor.LIGHT_PURPLE + "[VIP] " + ChatColor.RESET;
-			
+
 			Main.getInstance().getServer().broadcastMessage(ChatColor.GRAY + "<" + prefix + player.getName()
 					+ ChatColor.GRAY + "> " + ChatColor.RESET + e.getMessage());
 		}

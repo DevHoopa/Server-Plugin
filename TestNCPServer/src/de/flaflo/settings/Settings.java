@@ -46,7 +46,7 @@ public class Settings {
 	 * Setzt den Spawnpunkt
 	 * @param spawn
 	 */
-	public void setSpawn(Location spawn) {
+	public void setSpawn(final Location spawn) {
 		config.set("spawn.world", spawn.getWorld().getName());
 		config.set("spawn.x", spawn.getX());
 		config.set("spawn.y", spawn.getY());
@@ -62,11 +62,11 @@ public class Settings {
 	 * 
 	 * @return Location
 	 */
-	public Location getWarp(String name) {
+	public Location getWarp(final String name) {
 		if (config.getString("warps." + name) == null || config.getString("warps." + name).isEmpty())
 			return null;
 		
-		Location l = new Location(Bukkit.getWorld(config.getString("warps." + name + ".world")), config.getDouble("warps." + name + ".x"), config.getDouble("warps." + name + ".y"), config.getDouble("warps." + name + ".z"));
+		final Location l = new Location(Bukkit.getWorld(config.getString("warps." + name + ".world")), config.getDouble("warps." + name + ".x"), config.getDouble("warps." + name + ".y"), config.getDouble("warps." + name + ".z"));
 		
 		l.setYaw((float) config.getDouble("warps." + name + ".yaw"));
 		l.setPitch((float) config.getDouble("warps." + name + ".pitch"));
@@ -86,7 +86,7 @@ public class Settings {
 	 * Setzt einen Warppunkt
 	 * @param warp, name
 	 */
-	public void setWarp(Location warp, String name) {
+	public void setWarp(final Location warp, final String name) {
 		config.set("warps." + name + ".world", warp.getWorld().getName());
 		config.set("warps." + name + ".x", warp.getX());
 		config.set("warps." + name + ".y", warp.getY());
@@ -97,7 +97,7 @@ public class Settings {
 		this.save();
 	}
 	
-	public void removeWarp(String name) {
+	public void removeWarp(final String name) {
 		config.set("warps." + name, null);
 		
 		this.save();
@@ -109,12 +109,7 @@ public class Settings {
 	 * @return Location
 	 */
 	public Location getSpawn() {
-		Location l = new Location(Bukkit.getWorld(config.getString("spawn.world")), config.getDouble("spawn.x"), config.getDouble("spawn.y"), config.getDouble("spawn.z"));
-		
-		l.setYaw((float) config.getDouble("spawn.yaw"));
-		l.setPitch((float) config.getDouble("spawn.pitch"));
-		
-		return l;
+		return new Location(Bukkit.getWorlds().get(0), -738, 4, 1681, 88, -2);
 	}
 	
 	/**
@@ -123,7 +118,7 @@ public class Settings {
 	public void save() {
 		try {
 			config.save(cfgFile);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Main.getInstance().getLogger().log(Level.WARNING, "Fehler beim speichern der Einstellungen: ");
 			e.printStackTrace();
 		}

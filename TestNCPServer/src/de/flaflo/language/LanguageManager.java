@@ -74,7 +74,11 @@ public class LanguageManager {
 		WARP_SET("warp.set"),
 		
 		NO_FLY_PVP("pvp.fly.deny"),
-		NO_HEAL_PVP("pvp.heal.deny");
+		NO_HEAL_PVP("pvp.heal.deny"),
+		
+		DONATE1("donate.1"),
+		DONATE2("donate.2"),
+		DONATE3("donate.3");
 
 		final String dict;
 		
@@ -159,6 +163,10 @@ public class LanguageManager {
 					
 					this.addString(Dictionary.NO_FLY_PVP, "You aren't allowed to fight while flying.");
 					this.addString(Dictionary.NO_HEAL_PVP, "You aren't allowed to heal while flying.");
+					
+					this.addString(Dictionary.DONATE1, "You like the Servers?");
+					this.addString(Dictionary.DONATE2, "Keep them alive and donate:");
+					this.addString(Dictionary.DONATE3, "http://goo.gl/G7D4iu");
 				}},
 			new Language("de") {
 				@Override
@@ -225,6 +233,10 @@ public class LanguageManager {
 					
 					this.addString(Dictionary.NO_FLY_PVP, "Du darfst während dem Fliegen nicht kämpfen!");
 					this.addString(Dictionary.NO_HEAL_PVP, "Du kannst dich während dem Kämpfen nicht heilen!");
+					
+					this.addString(Dictionary.DONATE1, "Du willst die Server weiterhin?");
+					this.addString(Dictionary.DONATE2, "Dann spende unter folgendem Link:");
+					this.addString(Dictionary.DONATE3, "http://goo.gl/G7D4iu");
 				}
 		}};
 	
