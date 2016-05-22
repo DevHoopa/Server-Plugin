@@ -155,7 +155,7 @@ public class MainListener implements Listener {
 				player.setPlayerListName(prefix + player.getName());				
 			}
 			
-		}.runTaskLater(Main.getInstance(), 60);
+		}.runTaskTimer(Main.getInstance(), 80, 80);
 		
 		UPlayer.spawn(e.getPlayer(), false);
 	}
