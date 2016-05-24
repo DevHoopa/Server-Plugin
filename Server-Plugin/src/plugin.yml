@@ -1,0 +1,39 @@
+name: Server
+main: de.flaflo.main.Main
+version: 2.0
+depend: [WorldEdit]
+commands:
+   ping:
+      command: /ping
+   fly:
+      command: /fly
+   spawn:
+      command: /spawn
+   damage:
+      command: /damage
+   heal:
+      command: /heal
+   apple:
+      command: /heal
+   warp:
+      command: /warp
+   tpa:
+      command: /tpa
+   c:
+      command: /c
+   hunger:
+      command: /hunger
+   afk:
+      command: /afk
+   item:
+      command: /item
+   clear:
+      command: /clear
+   freebuild:
+      command: /freebuild
+   mute:
+      command: /mute
+   whois:
+      command: /whois <player>
+   lang:
+      command: /lang <de/en>
