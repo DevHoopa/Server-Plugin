@@ -9,10 +9,15 @@ import de.flaflo.language.LanguageManager.Dictionary;
 import de.flaflo.main.Main;
 import de.flaflo.util.UMisc;
 
-public class CommandFreebuild implements CommandExecutor {
+public class CommandFreebuild extends Command {
 
+	public CommandFreebuild()
+	{
+		super("freebuild");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		if (args.length == 0)
 			if (arg0.isOp() || arg0.hasPermission("freebuild"))
 				arg0.sendMessage("§7[§aFreebuild§7]§c /freebuild clear");

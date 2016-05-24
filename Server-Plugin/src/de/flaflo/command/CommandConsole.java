@@ -17,10 +17,15 @@ import de.flaflo.main.Main;
  * 
  * @author Flaflo
  */
-public class CommandConsole implements CommandExecutor {
+public class CommandConsole extends Command {
 
+	public CommandConsole()
+	{
+		super("c");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		final Player p = (Player) arg0;
 
 		if (args.length == 0) {

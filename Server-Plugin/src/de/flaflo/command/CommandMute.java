@@ -19,7 +19,9 @@ import de.flaflo.main.Main;
 import de.flaflo.util.UMisc;
 import de.flaflo.util.UPlayer;
 
-public class CommandMute implements CommandExecutor {
+public class CommandMute extends Command {
+	
+	
 	
 	public static final Date DATE_INFINITY = new Date(Long.MAX_VALUE);
 	
@@ -33,6 +35,7 @@ public class CommandMute implements CommandExecutor {
 	public static final HashMap<UUID, Date> MUTED_PLAYERS = new HashMap<UUID, Date>();
 	
 	public CommandMute() {
+		super("mute");
 		new BukkitRunnable() {
 
 			@Override
@@ -57,7 +60,7 @@ public class CommandMute implements CommandExecutor {
 	}
 	
 	@Override
-	public boolean onCommand(final CommandSender sender, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender sender, final String arg2, final String[] args) {
 		
 		if (sender.isOp() || sender.hasPermission("player.mute")) {
 			if (args.length == 0)

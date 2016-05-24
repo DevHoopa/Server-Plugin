@@ -20,12 +20,17 @@ import de.flaflo.util.UPlayer;
  * @author Flaflo
  *
  */
-public class CommandTPA implements CommandExecutor {
+public class CommandTPA extends Command {
 
 	private static final HashMap<UUID, UUID> requestQueue = new HashMap<UUID, UUID>();
 	
+	public CommandTPA()
+	{
+		super("tpa");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		final Player p = (Player) arg0;
 		final UUID pId = p.getUniqueId();
 		

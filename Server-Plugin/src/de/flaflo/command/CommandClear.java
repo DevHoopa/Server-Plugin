@@ -10,10 +10,15 @@ import de.flaflo.language.LanguageManager.Dictionary;
 import de.flaflo.main.Main;
 import de.flaflo.util.UMisc;
 
-public class CommandClear implements CommandExecutor {
+public class CommandClear extends Command {
 
+	public CommandClear()
+	{
+		super("clear");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		
 		if (args.length == 0) {
 			((Player) arg0).getInventory().clear();

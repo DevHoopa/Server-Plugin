@@ -1,5 +1,9 @@
 package de.flaflo.main;
 
+import java.lang.reflect.Field;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,12 +55,49 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		settings = new Settings();
 
-		registerCommands();
+		//registerCommands();
 		registerEvents();
 
 		addAllInputs();
 		startClearLag();
 		startResetFreebuild();
+		
+		/**
+		 * 
+		 *  Registriert Befehle ohne die plugin.yml
+		 *  @author UnderCreepe
+		 * 
+		 */
+		
+		try {
+			   final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+
+			   bukkitCommandMap.setAccessible(true);
+			   CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+
+			   commandMap.register("item", new CommandItem());
+			   commandMap.register("afk", new CommandAFK());
+			   commandMap.register("hunger", new CommandHunger());
+			   commandMap.register("heal", new CommandHeal());
+			   commandMap.register("clear", new CommandClear());
+			   commandMap.register("c", new CommandConsole());
+			   commandMap.register("tpa", new CommandTPA());
+			   commandMap.register("warp", new CommandWarp());
+			   commandMap.register("spawn", new CommandSpawn());
+			   commandMap.register("apple", new CommandOPApple());
+			   commandMap.register("fly", new CommandFly());
+			   commandMap.register("freebuild", new CommandFreebuild());
+			   commandMap.register("ping", new CommandPing());
+			   commandMap.register("whois", new CommandWhois());
+			   commandMap.register("mute", new CommandMute());
+			   commandMap.register("lang", new CommandLang());
+			   commandMap.register("damage", new CommandDamage());
+			   
+			   
+		} catch(Exception e) {
+			   e.printStackTrace();
+			}
+		
 	}
 
 	/**
@@ -145,25 +186,8 @@ public class Main extends JavaPlugin {
 	/**
 	 * Registeriert alle Commands
 	 */
-	private void registerCommands() {
-		this.getCommand("ping").setExecutor(new CommandPing());
-		this.getCommand("fly").setExecutor(new CommandFly());
-		this.getCommand("spawn").setExecutor(new CommandSpawn());
-		this.getCommand("damage").setExecutor(new CommandDamage());
-		this.getCommand("heal").setExecutor(new CommandHeal());
-		this.getCommand("apple").setExecutor(new CommandOPApple());
-		this.getCommand("warp").setExecutor(new CommandWarp());
-		this.getCommand("tpa").setExecutor(new CommandTPA());
-		this.getCommand("c").setExecutor(new CommandConsole());
-		this.getCommand("hunger").setExecutor(new CommandHunger());
-		this.getCommand("afk").setExecutor(new CommandAFK());
-		this.getCommand("item").setExecutor(new CommandItem());
-		this.getCommand("clear").setExecutor(new CommandClear());
-		this.getCommand("freebuild").setExecutor(new CommandFreebuild());
-		this.getCommand("mute").setExecutor(new CommandMute());
-		this.getCommand("whois").setExecutor(new CommandWhois());
-		this.getCommand("lang").setExecutor(new CommandLang());
-	}
+	/*private void registerCommands() {
+	}*/
 	
 	/**
 	 * Sendet eine Nachricht an einen Spieler

@@ -7,10 +7,15 @@ import org.bukkit.entity.Player;
 
 import de.flaflo.language.LanguageManager;
 
-public class CommandLang implements CommandExecutor {
+public class CommandLang extends Command {
 
+	public CommandLang()
+	{
+		super("lang");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		if (args.length == 1) {
 			final Player p = (Player) arg0;
 			

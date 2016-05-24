@@ -15,10 +15,15 @@ import de.flaflo.util.UPlayer;
  * @author Flaflo
  *
  */
-public class CommandSpawn implements CommandExecutor {
+public class CommandSpawn extends Command {
 
+	public CommandSpawn()
+	{
+		super("spawn");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		if (args.length == 0) {
 			final Player p = (Player) arg0;
 

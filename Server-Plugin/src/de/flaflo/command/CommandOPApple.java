@@ -17,10 +17,15 @@ import de.flaflo.main.Main;
  * @author Flaflo
  *
  */
-public class CommandOPApple implements CommandExecutor {
+public class CommandOPApple extends Command {
 
+	public CommandOPApple()
+	{
+		super("apple");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		final Player p = (Player) arg0;
 
 		int amount = 1;

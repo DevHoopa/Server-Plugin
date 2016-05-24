@@ -17,10 +17,15 @@ import de.flaflo.util.UPlayer;
  * @author Flaflo
  *
  */
-public class CommandWarp implements CommandExecutor {
+public class CommandWarp extends Command{
 
+	public CommandWarp()
+	{
+		super("warp");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		final Player p = (Player) arg0;
 
 		if (args.length == 0) {

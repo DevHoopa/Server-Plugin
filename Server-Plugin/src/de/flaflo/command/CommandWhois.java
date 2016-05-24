@@ -19,14 +19,14 @@ import de.flaflo.main.Main;
  * 
  * @author Flaflo
  */
-public class CommandWhois implements CommandExecutor {
+public class CommandWhois extends Command {
 
 	public CommandWhois() {
-
+		super("whois");
 	}
 
 	@Override
-	public boolean onCommand(final CommandSender cs, final Command command, final String label, final String[] args) {
+	public boolean execute(final CommandSender cs, final String arg2, final String[] args) {
 		final Player player = Bukkit.getServer().getPlayer(args[0]);
 		if (cs.isOp()) {
 			if (player != null) {

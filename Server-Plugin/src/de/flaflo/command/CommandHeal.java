@@ -17,12 +17,17 @@ import de.flaflo.main.Main;
  * @author Flaflo
  *
  */
-public class CommandHeal implements CommandExecutor {
+public class CommandHeal extends Command {
 
 	private static final HashMap<Player, Long> lastFightByPlayer = new HashMap<Player, Long>();
 	
+	public CommandHeal()
+	{
+		super("heal");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		if (args.length == 0) {
 			final Player p = (Player) arg0;
 

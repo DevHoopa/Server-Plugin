@@ -23,8 +23,13 @@ import de.flaflo.main.Main;
  * 
  * @author Flaflo
  */
-public class CommandItem implements CommandExecutor {
+public class CommandItem extends Command {
 
+	public CommandItem()
+	{
+		super("item");
+	}
+	
 	public static final ArrayList<Material> RESTRICTED_MATERIALS = new ArrayList<Material>() {
 		private static final long serialVersionUID = -8474898387097438744L;
 		{
@@ -67,7 +72,7 @@ public class CommandItem implements CommandExecutor {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		final Player p = (Player) arg0;
 
 		int amount = 1;

@@ -17,10 +17,15 @@ import net.minecraft.server.v1_8_R3.EntityPlayer;
  * @author Flaflo
  *
  */
-public class CommandPing implements CommandExecutor {
+public class CommandPing extends Command {
 
+	public CommandPing()
+	{
+		super("ping");
+	}
+	
 	@Override
-	public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] args) {
+	public boolean execute(final CommandSender arg0, final String arg2, final String[] args) {
 		if (args.length == 0) {
 			final Player p = (Player) arg0;
 
